@@ -175,7 +175,7 @@ function TopicDetails({
                   />
                   {deletingItemId === item.sortKey && isDeletingItem && <Spinner size="small" />}
                 </HorizontalCenter>
-                {!!item.days && `After: ${item.days} days`}
+                {!!item.days && `After: ${item.days} ${item.days === 1 ? 'day' : 'days'}`}
                 {!!item.note && <Text style={{ whiteSpace: 'pre-line' }}>{item.note}</Text>}
               </Box>
             ))}
