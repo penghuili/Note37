@@ -23,7 +23,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItems, onUpdate }
       <ContentWrapper>
         {!!item && (
           <>
-            <Text>{formatDateTime(new Date(item.createdAt))}</Text>
+            <Text>{formatDateTime(new Date(item.updatedAt || item.createdAt))}</Text>
             <Spacer />
             <AreaField
               label="Note"
