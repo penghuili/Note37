@@ -3,8 +3,9 @@ import { MoreVertical, Refresh } from 'grommet-icons';
 import React, { useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 
+import { format } from 'date-fns';
 import apps from '../../shared/js/apps';
-import { formatDate, formatDateTime } from '../../shared/js/date';
+import { formatDate } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Divider from '../../shared/react-pure/Divider';
 import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
@@ -150,8 +151,8 @@ function TopicDetails({
             {topic?.items?.map(item => (
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
-                  <Text size="xsmall" margin="0 1rem 0 0">
-                    {formatDateTime(new Date(item.createdAt))}
+                  <Text size="xsmall">
+                    {format(new Date(item.createdAt), 'yyyy-MM-dd HH:mm:ss EEEEEE')}
                   </Text>
                   <Menu
                     icon={<MoreVertical />}
