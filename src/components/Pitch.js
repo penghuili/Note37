@@ -10,9 +10,9 @@ function Pitch({ showHome }) {
   return (
     <>
       <Text margin="0 0 1rem">
-        Know how often something happens, <RouteLink label="encrypted" to="/encryption" />.
+        Know how often things happen, <RouteLink label="encrypted" to="/encryption" />.
       </Text>
-      {showHome && location !== '/' && <RouteLink label="← Bck to home" to="/" />}
+      {showHome && location !== '/' && <RouteLink label="← Back to home" to="/" />}
     </>
   );
 }

@@ -10,8 +10,10 @@ import SignIn from '../shared/react/SignIn';
 import SignUp from '../shared/react/SignUp';
 import Verify2FA from '../shared/react/Verify2FA';
 import Account from '../views/Account';
+import Encryption from '../views/Encryption';
 import ItemAdd from '../views/ItemAdd';
 import ItemUpdate from '../views/ItemUpdate';
+import Privacy from '../views/Privacy';
 import TopicAdd from '../views/TopicAdd';
 import TopicDetails from '../views/TopicDetails';
 import TopicUpdate from '../views/TopicUpdate';
@@ -40,6 +42,8 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
         <Route path="/security" component={Security} />
         <Route path="/security/2fa" component={Setup2FA} />
         <Route path="/security/password" component={ChangePassword} />
+        <Route path="/encryption" component={Encryption} />
+        <Route path="/privacy" component={Privacy} />
 
         <Route path="/" component={Topics} />
         <Route>{() => <Redirect to="/" />}</Route>
@@ -52,6 +56,8 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
       <Route path="/sign-up" component={SignUp} />
       <Route path="/sign-in" component={SignIn} />
       <Route path="/sign-in/2fa" component={Verify2FA} />
+      <Route path="/encryption" component={Encryption} />
+      <Route path="/privacy" component={Privacy} />
 
       <Route path="/" component={Welcome} />
       <Route>{() => <Redirect to="/" />}</Route>
