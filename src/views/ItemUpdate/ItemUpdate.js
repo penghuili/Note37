@@ -1,8 +1,8 @@
 import { Button, Text } from 'grommet';
 import React, { useState } from 'react';
 
+import TextEditor from '../../components/TextEditor';
 import { formatDateTime } from '../../shared/js/date';
-import AreaField from '../../shared/react-pure/AreaField';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
@@ -25,13 +25,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItems, onUpdate }
           <>
             <Text>{formatDateTime(new Date(item.updatedAt || item.createdAt))}</Text>
             <Spacer />
-            <AreaField
-              label="Note"
-              placeholder="Note"
-              value={note}
-              minHeight="13rem"
-              onChange={setNote}
-            />
+            <TextEditor text={note} onChange={setNote} />
             <Spacer />
             <Button
               label="Update item"

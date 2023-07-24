@@ -1,7 +1,7 @@
 import { Button } from 'grommet';
 import React, { useState } from 'react';
 
-import AreaField from '../../shared/react-pure/AreaField';
+import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import InputField from '../../shared/react-pure/InputField';
 import Spacer from '../../shared/react-pure/Spacer';
@@ -18,13 +18,7 @@ function TopicAdd({ isLoading, onCreate }) {
         <InputField label="Title" placeholder="Title" value={title} onChange={setTitle} />
 
         <Spacer />
-        <AreaField
-          label="Note"
-          placeholder="Note"
-          value={note}
-          minHeight="13rem"
-          onChange={setNote}
-        />
+        <TextEditor text={note} onChange={setNote} />
 
         <Spacer />
         <Button

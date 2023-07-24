@@ -12,6 +12,7 @@ import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
 import AppBar from '../../shared/react/AppBar';
 import RouteLink from '../../shared/react/RouteLink';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
+import TextEditor from '../../components/TextEditor';
 
 function getChartOptions({
   xaxisType = 'datetime',
@@ -176,7 +177,7 @@ function TopicDetails({
                   {deletingItemId === item.sortKey && isDeletingItem && <Spinner size="small" />}
                 </HorizontalCenter>
                 {!!item.days && `After: ${item.days} ${item.days === 1 ? 'day' : 'days'}`}
-                {!!item.note && <Text style={{ whiteSpace: 'pre-line' }}>{item.note}</Text>}
+                {!!item.note && <TextEditor editable={false} text={item.note} />}
               </Box>
             ))}
           </>

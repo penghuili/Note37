@@ -1,7 +1,7 @@
 import { Button } from 'grommet';
 import React, { useState } from 'react';
 
-import AreaField from '../../shared/react-pure/AreaField';
+import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import DatePicker from '../../shared/react-pure/DatePicker';
 import Spacer from '../../shared/react-pure/Spacer';
@@ -17,7 +17,7 @@ function ItemAdd({ topicId, isLoading, onCreate }) {
       <ContentWrapper>
         <DatePicker label="Date" showTime value={date} onChange={setDate} />
         <Spacer />
-        <AreaField label="Note" placeholder="Note" value={note} onChange={setNote} />
+        <TextEditor text={note} onChange={setNote} />
 
         <Spacer />
         <Button
