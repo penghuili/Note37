@@ -1,13 +1,13 @@
 import { Button } from 'grommet';
 import React, { useState } from 'react';
 
-import AreaField from '../../shared/react-pure/AreaField';
+import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import InputField from '../../shared/react-pure/InputField';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
-import { useListener } from '../../shared/react/hooks/useListener';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
+import { useListener } from '../../shared/react/hooks/useListener';
 
 function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
   const [title, setTitle] = useState('');
@@ -26,13 +26,7 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
         <InputField label="Title" placeholder="Title" value={title} onChange={setTitle} />
 
         <Spacer />
-        <AreaField
-          label="Note"
-          placeholder="Note"
-          value={note}
-          minHeight="13rem"
-          onChange={setNote}
-        />
+        <TextEditor text={note} onChange={setNote} />
 
         <Spacer />
         <Button
