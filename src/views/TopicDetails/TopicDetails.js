@@ -153,7 +153,7 @@ function TopicDetails({
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
                   <Text size="xsmall">
-                    {format(new Date(item.createdAt), 'yyyy-MM-dd HH:mm:ss EEEEEE')}
+                    {format(new Date(item.createdAt), 'yyyy-MM-dd EEEEEE HH:mm:ss')}
                   </Text>
                   <Menu
                     icon={<MoreVertical />}
