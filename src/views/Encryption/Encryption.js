@@ -31,23 +31,21 @@ function Encryption() {
         </Text>
 
         <Heading level="3" margin="3rem 0 0">
-          When you create / update a topic or item:
+          When you create / update an item:
         </Heading>
         <Text margin="1rem 0 0">
-          1. Your device encrypts your content with a random strong password, then it encrypts the
-          password with your public key, and save the encrypted password into database;
+          1. Your device encrypts your content with a random strong password;
         </Text>
         <Text margin="1rem 0 0">2. Your device encrypts the password with your public key;</Text>
         <Text margin="1rem 0 0">
-          3. Your device sends the encrypted contents and the encrypted password to server, which
-          will be saved in database;
+          3. Your device sends the encrypted contents and the encrypted password to server;
         </Text>
 
         <Heading level="3" margin="3rem 0 0">
-          When you decrypt a topic or item:
+          When you decrypt an item:
         </Heading>
         <Text margin="1rem 0 0">
-          1. Your device gets the encrypted password and encrypted contents from database;
+          1. Your device gets the encrypted password and encrypted contents from server;
         </Text>
         <Text margin="1rem 0 0">
           2. Your device decrypts the encrypted password with your private key;
