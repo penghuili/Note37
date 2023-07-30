@@ -10,6 +10,7 @@ export const topicActionTypes = {
   UPDATE_TOPIC_SUCCEEDED: 'topic/UPDATE_TOPIC_SUCCEEDED',
   FETCH_ITEMS_REQUESTED: 'topic/FETCH_ITEMS_REQUESTED',
   FETCH_ITEMS_SUCCEEDED: 'topic/FETCH_ITEMS_SUCCEEDED',
+  YEAR_MONTH_CHANGED: 'topic/YEAR_MONTH_CHANGED',
   CREATE_ITEM_PRESSED: 'topic/CREATE_ITEM_PRESSED',
   CREATE_ITEM_SUCCEEDED: 'topic/CREATE_ITEM_SUCCEEDED',
   UPDATE_ITEM_PRESSED: 'topic/UPDATE_ITEM_PRESSED',
@@ -46,17 +47,20 @@ export const topicActionCreators = {
   updateTopicSucceeded(topicId, topic) {
     return { type: topicActionTypes.UPDATE_TOPIC_SUCCEEDED, payload: { topicId, topic } };
   },
-  fetchItemsRequested(topicId, startKey) {
+  fetchItemsRequested({ topicId, startKey, month }) {
     return {
       type: topicActionTypes.FETCH_ITEMS_REQUESTED,
-      payload: { topicId, startKey },
+      payload: { topicId, startKey, month },
     };
   },
-  fetchItemsSucceeded(topicId, items, startKey, hasMore) {
+  fetchItemsSucceeded(topicId, { items, startKey, hasMore }) {
     return {
       type: topicActionTypes.FETCH_ITEMS_SUCCEEDED,
       payload: { topicId, items, startKey, hasMore },
     };
+  },
+  yearMonthChanged(topicId, yearMonth) {
+    return { type: topicActionTypes.YEAR_MONTH_CHANGED, payload: { topicId, yearMonth } };
   },
   createItemPressed(topicId, note, date) {
     return { type: topicActionTypes.CREATE_ITEM_PRESSED, payload: { topicId, note, date } };

@@ -1,18 +1,19 @@
+import { format } from 'date-fns';
 import { Box, Button, Heading, Menu, Spinner, Text } from 'grommet';
 import { MoreVertical, Refresh } from 'grommet-icons';
 import React, { useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 
-import { format } from 'date-fns';
+import MonthPicker from '../../components/MonthPicker';
+import TextEditor from '../../components/TextEditor';
 import apps from '../../shared/js/apps';
 import { formatDate } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Divider from '../../shared/react-pure/Divider';
 import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
 import AppBar from '../../shared/react/AppBar';
-import RouteLink from '../../shared/react/RouteLink';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
-import TextEditor from '../../components/TextEditor';
+import RouteLink from '../../shared/react/RouteLink';
 
 function getChartOptions({
   xaxisType = 'datetime',
@@ -71,17 +72,19 @@ function getChartOptions({
 function TopicDetails({
   topicId,
   topic,
+  yearMonth,
   isLoading,
   isLoadingItems,
   isDeletingItem,
   onFetchItems,
   onDeleteItem,
+  onYearMonthChange,
   onNav,
 }) {
   const [deletingItemId, setDeletingItemId] = useState(null);
 
   useEffectOnce(() => {
-    onFetchItems(topicId);
+    onFetchItems({ topicId });
   });
 
   return (
@@ -127,7 +130,7 @@ function TopicDetails({
                     label="Load more"
                     size="xsmall"
                     icon={<Refresh size="small" color="brand" />}
-                    onClick={() => onFetchItems(topicId, topic.startKey)}
+                    onClick={() => onFetchItems({ topicId, startKey: topic.startKey })}
                   />
                 ))}
             </HorizontalCenter>
@@ -149,7 +152,15 @@ function TopicDetails({
               </Box>
             )}
 
-            {topic?.items?.map(item => (
+            <Box justify="end" width="100%" direction="row">
+              <MonthPicker
+                startDate={new Date('2020-04-04')}
+                value={yearMonth}
+                onChange={value => onYearMonthChange(topicId, value)}
+              />
+            </Box>
+
+            {topic.items?.map(item => (
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
                   <Text size="xsmall">

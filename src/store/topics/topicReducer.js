@@ -86,6 +86,18 @@ function handleFetchItemsSucceeded(state, { topicId, items, startKey, hasMore })
   return { ...state, topics };
 }
 
+function handleYearMonthChanged(state, { topicId, yearMonth }) {
+  return {
+    ...state,
+    topics: state.topics.map(topic => {
+      if (topic.sortKey === topicId) {
+        return { ...topic, items: [], yearMonth };
+      }
+      return topic;
+    }),
+  };
+}
+
 function handleCreateItemSucceeded(state, { topicId, item }) {
   const topics = state.topics.map(topic => {
     if (topic.sortKey === topicId) {
@@ -148,6 +160,9 @@ export function topicReducer(state = initialState, action) {
 
     case topicActionTypes.FETCH_ITEMS_SUCCEEDED:
       return handleFetchItemsSucceeded(state, action.payload);
+
+    case topicActionTypes.YEAR_MONTH_CHANGED:
+      return handleYearMonthChanged(state, action.payload);
 
     case topicActionTypes.CREATE_ITEM_SUCCEEDED:
       return handleCreateItemSucceeded(state, action.payload);

@@ -12,6 +12,8 @@ import {
   updateTopic,
 } from './topicNetwork';
 import { topicSelectors } from './topicSelectors';
+import { ALL } from '../../components/MonthPicker';
+import { add0 } from '../../shared/js/utils';
 
 function* handleFetchTopicsRequested() {
   const topics = yield select(topicSelectors.getTopics);
@@ -66,9 +68,9 @@ function* handleUpdateTopicPressed({ payload: { topicId, title, note } }) {
   yield put(topicActionCreators.isLoading(false));
 }
 
-function* handleFetchItemsRequested({ payload: { topicId } }) {
+function* handleFetchItemsRequested({ payload: { topicId, startKey, month } }) {
   const items = yield select(topicSelectors.getItems, topicId);
-  if (items.length) {
+  if (!month && !startKey && items.length) {
     return;
   }
 
@@ -76,14 +78,34 @@ function* handleFetchItemsRequested({ payload: { topicId } }) {
 
   yield put(topicActionCreators.isLoadingItems(true));
 
-  const { data } = yield call(fetchItems, topicId, topic.startKey, topic.decryptedPassword);
+  const { data } = yield call(fetchItems, topicId, { startKey, month }, topic.decryptedPassword);
   if (data) {
-    yield put(
-      topicActionCreators.fetchItemsSucceeded(topicId, data.items, data.startKey, data.hasMore)
-    );
+    yield put(topicActionCreators.fetchItemsSucceeded(topicId, data));
   }
 
   yield put(topicActionCreators.isLoadingItems(false));
+}
+
+function* handleYearMonthChanged({ payload: { topicId, yearMonth } }) {
+  if (yearMonth.year !== ALL && yearMonth.month !== ALL) {
+    yield put(
+      topicActionCreators.fetchItemsRequested({
+        topicId,
+        month: `${yearMonth.year}${add0(yearMonth.month)}`,
+      })
+    );
+    return;
+  }
+
+  if (yearMonth.year !== ALL && yearMonth.month === ALL) {
+    yield put(topicActionCreators.fetchItemsRequested({ topicId, month: yearMonth.year }));
+    return;
+  }
+
+  if (yearMonth.year === ALL && yearMonth.month == ALL) {
+    yield put(topicActionCreators.fetchItemsRequested({ topicId }));
+    return;
+  }
 }
 
 function* handleCreateItemPressed({ payload: { topicId, note, date } }) {
@@ -131,6 +153,7 @@ export function* topicSagas() {
     takeLatest(topicActionTypes.CREATE_TOPIC_PRESSED, handleCreateTopicPressed),
     takeLatest(topicActionTypes.UPDATE_TOPIC_PRESSED, handleUpdateTopicPressed),
     takeLatest(topicActionTypes.FETCH_ITEMS_REQUESTED, handleFetchItemsRequested),
+    takeLatest(topicActionTypes.YEAR_MONTH_CHANGED, handleYearMonthChanged),
     takeLatest(topicActionTypes.CREATE_ITEM_PRESSED, handleCreateItemPressed),
     takeLatest(topicActionTypes.UPDATE_ITEM_PRESSED, handleUpdateItemPressed),
     takeLatest(topicActionTypes.DELETE_ITEM_PRESSED, handleDeleteItemPressed),

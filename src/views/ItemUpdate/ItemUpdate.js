@@ -14,7 +14,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItems, onUpdate }
   useListener(item?.note, value => setNote(value || ''));
 
   useEffectOnce(() => {
-    onFetchItems(topicId);
+    onFetchItems({ topicId });
   });
 
   return (

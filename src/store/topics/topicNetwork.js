@@ -72,15 +72,19 @@ export async function updateTopic(topicId, decryptedPassword, { title, note }) {
   }
 }
 
-export async function fetchItems(topicId, startKey, decryptedPassword) {
+export async function fetchItems(topicId, { startKey, month }, decryptedPassword) {
   try {
+    const queryStartKey = startKey ? `startKey=${startKey}` : '';
+    const queryMonth = month ? `month=${month}` : '';
     const {
       items,
       startKey: newStartKey,
       limit,
     } = await HTTP.get(
       apps.often37.name,
-      `/v1/topics/${topicId}/items${startKey ? `?startKey=${startKey}` : ''}`
+      `/v1/topics/${topicId}/items${
+        queryStartKey || queryMonth ? `?${queryStartKey}${queryMonth}` : ''
+      }`
     );
 
     const decryptedItems = [];
