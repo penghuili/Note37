@@ -14,6 +14,8 @@ import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import RouteLink from '../../shared/react/RouteLink';
+import GapAndAgo from '../../components/GapAndAgo';
+import Spacer from '../../shared/react-pure/Spacer';
 
 function getChartOptions({
   xaxisType = 'datetime',
@@ -54,6 +56,7 @@ function getChartOptions({
       },
     },
     yaxis: {
+      tickAmount: 3,
       labels: {
         formatter: yFormatter,
       },
@@ -146,7 +149,7 @@ function TopicDetails({
                     xaxisRotate: 0,
                     colors: [apps.often37.color],
                     tickAmount: 1,
-                    yFormatter: value => `${value} days`,
+                    yFormatter: value => `${+value.toFixed(2)} days`,
                   })}
                 />
               </Box>
@@ -187,7 +190,8 @@ function TopicDetails({
                   />
                   {deletingItemId === item.sortKey && isDeletingItem && <Spinner size="small" />}
                 </HorizontalCenter>
-                {!!item.days && `After: ${item.days} ${item.days === 1 ? 'day' : 'days'}`}
+                <GapAndAgo gap={item.gap} ago={item.ago} />
+                <Spacer />
                 {!!item.note && <TextEditor editable={false} text={item.note} />}
               </Box>
             ))}

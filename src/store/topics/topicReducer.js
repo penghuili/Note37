@@ -1,8 +1,8 @@
-import { differenceInCalendarDays } from 'date-fns';
+import uniqBy from 'lodash.uniqby';
+
+import { formatDate } from '../../shared/js/date';
 import { sharedActionTypes } from '../../shared/react/store/sharedActions';
 import { topicActionTypes } from './topicActions';
-import uniqBy from 'lodash.uniqby';
-import { formatDate } from '../../shared/js/date';
 
 const initialState = {
   isLoading: false,
@@ -45,28 +45,41 @@ function handleUpdateTopicSucceeded(state, { topicId, topic }) {
   return { ...state, topics };
 }
 
+function splitTime(newerTime, olderTime) {
+  const totalSeconds = Math.floor(
+    (new Date(newerTime).getTime() - new Date(olderTime).getTime()) / 1000
+  );
+  const daysRemainder = totalSeconds % (60 * 60 * 24);
+  const days = (totalSeconds - daysRemainder) / 60 / 60 / 24;
+  const hoursRemainder = daysRemainder % (60 * 60);
+  const hours = (daysRemainder - hoursRemainder) / 60 / 60;
+  const minutesReminder = hoursRemainder % 60;
+  const minutes = (hoursRemainder - minutesReminder) / 60;
+  const seconds = minutesReminder;
+
+  return { days, hours, minutes, seconds, totalSeconds };
+}
+
 function processItems(items) {
   const uniqed = uniqBy(items, item => item.sortKey);
 
   return uniqed.map((item, index) => {
-    if (uniqed[index + 1]) {
-      return {
-        ...item,
-        days: differenceInCalendarDays(
-          new Date(item.createdAt),
-          new Date(uniqed[index + 1].createdAt)
-        ),
-      };
-    }
+    const gap = uniqed[index + 1]
+      ? splitTime(new Date(item.createdAt), new Date(uniqed[index + 1].createdAt))
+      : null;
+    const ago = splitTime(new Date(), item.createdAt);
 
-    return item;
+    return { ...item, gap, ago };
   });
 }
 
 function getChartData(items) {
   return items
-    .filter(item => item.days !== undefined)
-    .map(item => ({ y: item.days, x: formatDate(new Date(item.createdAt)) }));
+    .filter(item => !!item.gap)
+    .map(item => ({
+      y: +(item.gap.totalSeconds / 60 / 60 / 24).toFixed(2),
+      x: formatDate(new Date(item.createdAt)),
+    }));
 }
 
 function handleFetchItemsSucceeded(state, { topicId, items, startKey, hasMore }) {
