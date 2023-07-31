@@ -16,7 +16,7 @@ import initShared from './shared/react/initShared';
 import Toast from './shared/react/Toast';
 import store from './store';
 
-initShared({ logo, app: apps.watcher37.name });
+initShared({ logo, app: apps.often37.name });
 
 setHook('location', useLocation);
 setHook('dispatch', useDispatch);
