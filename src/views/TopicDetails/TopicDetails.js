@@ -138,7 +138,7 @@ function TopicDetails({
                 ))}
             </HorizontalCenter>
 
-            {topic.chartData?.length > 1 && (
+            {!!topic.showChart && topic.chartData?.length > 1 && (
               <Box width="100%">
                 <ApexCharts
                   type="line"

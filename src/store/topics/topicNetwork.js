@@ -52,7 +52,7 @@ export async function createTopic({ title, note }) {
   }
 }
 
-export async function updateTopic(topicId, decryptedPassword, { title, note }) {
+export async function updateTopic(topicId, decryptedPassword, { title, note, showChart }) {
   try {
     const { title: encryptedTitle, note: encryptedNote } = await encryptTopicContent(
       { title, note },
@@ -62,6 +62,7 @@ export async function updateTopic(topicId, decryptedPassword, { title, note }) {
     const data = await HTTP.put(apps.often37.name, `/v1/topics/${topicId}`, {
       title: encryptedTitle,
       note: encryptedNote,
+      showChart,
     });
 
     const decrypted = await decryptTopicContent(data);
