@@ -31,6 +31,7 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
         <Spacer />
         <TextEditor text={note} onChange={setNote} />
 
+        <Spacer />
         <Text>Show chart:</Text>
         <HorizontalCenter>
           <RadioButton
