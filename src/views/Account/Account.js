@@ -10,7 +10,7 @@ import AppVersion from '../../shared/react/AppVersion';
 import ChangeTheme from '../../shared/react/ChangeTheme';
 import RouteLink from '../../shared/react/RouteLink';
 
-function Home({ account, isLoadingAccount }) {
+function Home({ account, isLoadingAccount, onLogOut }) {
   return (
     <>
       <AppBar title="Account" hasBack />
@@ -40,6 +40,10 @@ function Home({ account, isLoadingAccount }) {
             <RouteLink label="Privacy" to="/privacy" />
             <Spacer />
             <Anchor label="Contact" href="https://www.peng.kiwi/contact" target="_blank" />
+            <Spacer />
+            <Divider />
+            <Spacer />
+            <Anchor label="Log out" onClick={onLogOut} />
             <Spacer />
             <Divider />
             <Spacer />
