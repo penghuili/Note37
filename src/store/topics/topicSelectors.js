@@ -1,3 +1,5 @@
+import { ALL } from '../../components/MonthPicker';
+
 export const topicSelectors = {
   isLoading: state => state.topics.isLoading,
   isLoadingItems: state => state.topics.isLoadingItems,
@@ -12,8 +14,8 @@ export const topicSelectors = {
     const topic = topicSelectors.getTopic(state, topicId);
     return (topic?.items || topic?.monthItems || []).find(item => item.sortKey === itemId);
   },
-  getYearMonth: (state, topicId) => {
+  getMonth: (state, topicId) => {
     const topic = topicSelectors.getTopic(state, topicId);
-    return topic?.yearMonth;
-  }
+    return topic?.month || ALL;
+  },
 };

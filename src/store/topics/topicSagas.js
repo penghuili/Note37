@@ -1,5 +1,6 @@
 import { all, call, put, select, take, takeLatest } from 'redux-saga/effects';
 
+import { ALL } from '../../components/MonthPicker';
 import { routeHelpers } from '../../shared/react/routeHelpers';
 import { topicActionCreators, topicActionTypes } from './topicActions';
 import {
@@ -12,8 +13,6 @@ import {
   updateTopic,
 } from './topicNetwork';
 import { topicSelectors } from './topicSelectors';
-import { ALL } from '../../components/MonthPicker';
-import { add0 } from '../../shared/js/utils';
 
 function* handleFetchTopicsRequested() {
   const topics = yield select(topicSelectors.getTopics);
@@ -90,26 +89,13 @@ function* handleFetchItemsRequested({ payload: { topicId, startKey, month } }) {
   yield put(topicActionCreators.isLoadingItems(false));
 }
 
-function* handleYearMonthChanged({ payload: { topicId, yearMonth } }) {
-  if (yearMonth.year !== ALL && yearMonth.month !== ALL) {
-    yield put(
-      topicActionCreators.fetchItemsRequested({
-        topicId,
-        month: `${yearMonth.year}${add0(yearMonth.month)}`,
-      })
-    );
-    return;
-  }
-
-  if (yearMonth.year !== ALL && yearMonth.month === ALL) {
-    yield put(topicActionCreators.fetchItemsRequested({ topicId, month: yearMonth.year }));
-    return;
-  }
-
-  if (yearMonth.year === ALL && yearMonth.month == ALL) {
+function* handleMonthChanged({ payload: { topicId, month } }) {
+  if (month === ALL) {
     yield put(topicActionCreators.fetchItemsRequested({ topicId }));
     return;
   }
+
+  yield put(topicActionCreators.fetchItemsRequested({ topicId, month }));
 }
 
 function* handleCreateItemPressed({ payload: { topicId, note, date } }) {
@@ -157,7 +143,7 @@ export function* topicSagas() {
     takeLatest(topicActionTypes.CREATE_TOPIC_PRESSED, handleCreateTopicPressed),
     takeLatest(topicActionTypes.UPDATE_TOPIC_PRESSED, handleUpdateTopicPressed),
     takeLatest(topicActionTypes.FETCH_ITEMS_REQUESTED, handleFetchItemsRequested),
-    takeLatest(topicActionTypes.YEAR_MONTH_CHANGED, handleYearMonthChanged),
+    takeLatest(topicActionTypes.MONTH_CHANGED, handleMonthChanged),
     takeLatest(topicActionTypes.CREATE_ITEM_PRESSED, handleCreateItemPressed),
     takeLatest(topicActionTypes.UPDATE_ITEM_PRESSED, handleUpdateItemPressed),
     takeLatest(topicActionTypes.DELETE_ITEM_PRESSED, handleDeleteItemPressed),

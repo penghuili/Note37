@@ -8,6 +8,7 @@ import {
 } from '../../shared/js/encryption';
 import generatePassword from '../../shared/js/generatePassword';
 import { LocalStorage, sharedLocalStorageKeys } from '../../shared/js/LocalStorage';
+import { onlyKeepNumbers } from '../../shared/js/regex';
 import HTTP from '../../shared/react/HTTP';
 
 export async function fetchTopics() {
@@ -76,7 +77,7 @@ export async function updateTopic(topicId, decryptedPassword, { title, note, sho
 export async function fetchItems(topicId, { startKey, month }, decryptedPassword) {
   try {
     const queryStartKey = startKey ? `startKey=${startKey}` : '';
-    const queryMonth = month ? `month=${month}` : '';
+    const queryMonth = month ? `month=${onlyKeepNumbers(month)}` : '';
     const {
       items,
       startKey: newStartKey,

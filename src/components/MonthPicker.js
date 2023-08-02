@@ -1,81 +1,41 @@
 import { Select } from 'grommet';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
+import { add0 } from '../shared/js/utils';
 import HorizontalCenter from '../shared/react-pure/HorizontalCenter';
-import { useListener } from '../shared/react/hooks/useListener';
 
 export const ALL = 'All';
 
 function MonthPicker({ value, onChange, startDate, endDate = new Date() }) {
-  const [year, setYear] = useState(new Date().getFullYear());
-  useListener(value?.year, v => {
-    if (v) {
-      setYear(v);
+  const options = useMemo(() => {
+    const options = [ALL];
+    const endDateMonth = endDate.getMonth() + 1;
+    const endDateYear = endDate.getFullYear();
+    const startDateMonth = startDate.getMonth() + 1;
+    const startDateYear = startDate.getFullYear();
+    for (let year = endDateYear; year >= startDateYear; year--) {
+      for (let month = 12; month >= 1; month--) {
+        if (year === startDateYear && month < startDateMonth) {
+          continue;
+        }
+        if (year === endDateYear && month > endDateMonth) {
+          continue;
+        }
+        options.push(`${year}-${add0(month)}`);
+      }
     }
-  });
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  useListener(value?.month, v => {
-    if (v) {
-      setMonth(v);
-    }
-  });
 
-  const yearOptions = useMemo(() => {
-    const years = [];
-    years.push(ALL);
-    for (let i = startDate.getFullYear(); i <= endDate.getFullYear(); i++) {
-      years.push(i);
-    }
-    return years.sort((a, b) => b - a);
+    return options;
   }, [startDate, endDate]);
-  const monthOptions = useMemo(() => {
-    const isStartYear = year === startDate.getFullYear();
-    const isEndYear = year === endDate.getFullYear();
-    const start = isStartYear ? startDate.getMonth() + 1 : 1;
-    const end = isEndYear ? endDate.getMonth() + 1 : 12;
-    const months = [];
-    months.push(ALL);
-    for (let i = start; i <= end; i++) {
-      months.push(i);
-    }
-
-    return months;
-  }, [startDate, endDate, year]);
 
   return (
     <>
       <HorizontalCenter>
         <Select
-          options={yearOptions}
-          value={year}
-          onChange={({ option }) => {
-            if (option === ALL) {
-              onChange({ year: ALL, month: ALL });
-              return;
-            }
-
-            let newMonth = month;
-            const isStartYear = option === startDate.getFullYear();
-            const isEndYear = option === endDate.getFullYear();
-            const startYearMonth = startDate.getMonth() + 1;
-            const endYearMonth = endDate.getMonth() + 1;
-            if (isStartYear && newMonth < startYearMonth) {
-              newMonth = startYearMonth;
-            }
-            if (isEndYear && newMonth > endYearMonth) {
-              newMonth = endYearMonth;
-            }
-            onChange({ year: option, month: newMonth });
-          }}
-          width="4rem"
-        />
-        <Select
-          disabled={year === ALL}
-          options={monthOptions}
-          value={month}
-          onChange={({ option }) => onChange({ year, month: option })}
-          margin="0 0 0 0.5rem"
-          width="4rem"
+          options={options}
+          value={value}
+          onChange={({ option }) => onChange(option)}
+          width="6rem"
         />
       </HorizontalCenter>
     </>

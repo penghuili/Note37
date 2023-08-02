@@ -4,6 +4,7 @@ import { MoreVertical, Refresh } from 'grommet-icons';
 import React, { useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 
+import GapAndAgo from '../../components/GapAndAgo';
 import MonthPicker from '../../components/MonthPicker';
 import TextEditor from '../../components/TextEditor';
 import apps from '../../shared/js/apps';
@@ -11,11 +12,10 @@ import { formatDate } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Divider from '../../shared/react-pure/Divider';
 import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
+import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import RouteLink from '../../shared/react/RouteLink';
-import GapAndAgo from '../../components/GapAndAgo';
-import Spacer from '../../shared/react-pure/Spacer';
 
 function getChartOptions({
   xaxisType = 'datetime',
@@ -75,13 +75,13 @@ function getChartOptions({
 function TopicDetails({
   topicId,
   topic,
-  yearMonth,
+  month,
   isLoading,
   isLoadingItems,
   isDeletingItem,
   onFetchItems,
   onDeleteItem,
-  onYearMonthChange,
+  onMonthChange,
   onNav,
 }) {
   const [deletingItemId, setDeletingItemId] = useState(null);
@@ -92,7 +92,7 @@ function TopicDetails({
 
   return (
     <>
-      <AppBar title="Topic details" isLoading={isLoading} hasBack />
+      <AppBar title="Topic details" isLoading={isLoading || isLoadingItems} hasBack />
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink
@@ -138,6 +138,14 @@ function TopicDetails({
                 ))}
             </HorizontalCenter>
 
+            <MonthPicker
+              startDate={new Date(topic.createdAt)}
+              endDate={new Date()}
+              value={month}
+              onChange={value => onMonthChange(topicId, value)}
+            />
+            <Spacer />
+
             {!!topic.showChart && topic.chartData?.length > 1 && (
               <Box width="100%">
                 <ApexCharts
@@ -155,14 +163,11 @@ function TopicDetails({
               </Box>
             )}
 
-            <Box justify="end" width="100%" direction="row">
-              <MonthPicker
-                startDate={new Date('2020-04-04')}
-                value={yearMonth}
-                onChange={value => onYearMonthChange(topicId, value)}
-              />
-            </Box>
-
+            {!isLoadingItems && !topic.items?.length && (
+              <Box margin="1rem 0">
+                <Text>No items</Text>
+              </Box>
+            )}
             {topic.items?.map(item => (
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
