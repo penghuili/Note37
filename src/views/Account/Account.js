@@ -10,7 +10,7 @@ import AppVersion from '../../shared/react/AppVersion';
 import ChangeTheme from '../../shared/react/ChangeTheme';
 import RouteLink from '../../shared/react/RouteLink';
 
-function Home({ account, isLoadingAccount, onLogOut }) {
+function Account({ account, isLoadingAccount, onLogOut }) {
   return (
     <>
       <AppBar title="Account" hasBack />
@@ -55,4 +55,4 @@ function Home({ account, isLoadingAccount, onLogOut }) {
   );
 }
 
-export default Home;
+export default Account;
