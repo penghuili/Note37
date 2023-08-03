@@ -79,7 +79,8 @@ function getChartData(items) {
     .map(item => ({
       y: +(item.gap.totalSeconds / 60 / 60 / 24).toFixed(2),
       x: formatDate(new Date(item.createdAt)),
-    }));
+    }))
+    .reverse();
 }
 
 function handleFetchItemsSucceeded(state, { topicId, items, startKey, hasMore }) {
