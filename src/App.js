@@ -18,7 +18,7 @@ import store from './store';
 
 
 initShared({ logo, app: apps.note37.name });
-const theme = createTheme('#e8751a');
+const theme = createTheme('#DB4437');
 
 setHook('location', useLocation);
 setHook('dispatch', useDispatch);
