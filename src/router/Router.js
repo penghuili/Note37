@@ -32,11 +32,11 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
   if (isLoggedIn) {
     return (
       <Switch>
-        <Route path="/t/add" component={TopicAdd} />
-        <Route path="/t/:topicId" component={TopicDetails} />
-        <Route path="/t/:topicId/update" component={TopicUpdate} />
-        <Route path="/t/:topicId/items/add" component={ItemAdd} />
-        <Route path="/t/:topicId/items/:itemId/update" component={ItemUpdate} />
+        <Route path="/topics/add" component={TopicAdd} />
+        <Route path="/topics/:topicId" component={TopicDetails} />
+        <Route path="/topics/:topicId/update" component={TopicUpdate} />
+        <Route path="/topics/:topicId/items/add" component={ItemAdd} />
+        <Route path="/topics/:topicId/items/:itemId/update" component={ItemUpdate} />
 
         <Route path="/account" component={Account} />
         <Route path="/security" component={Security} />
