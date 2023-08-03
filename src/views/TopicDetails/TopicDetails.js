@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Box, Button, Heading, Menu, Spinner, Text } from 'grommet';
 import { MoreVertical, Refresh } from 'grommet-icons';
 import React, { useState } from 'react';
@@ -6,9 +5,8 @@ import ApexCharts from 'react-apexcharts';
 
 import GapAndAgo from '../../components/GapAndAgo';
 import MonthPicker from '../../components/MonthPicker';
-import TextEditor from '../../components/TextEditor';
 import apps from '../../shared/js/apps';
-import { formatDate } from '../../shared/js/date';
+import { formatDate, formatDateWeekTime } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Divider from '../../shared/react-pure/Divider';
 import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
@@ -16,6 +14,7 @@ import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import RouteLink from '../../shared/react/RouteLink';
+import TextEditor from '../../shared/react/TextEditor';
 
 function getChartOptions({
   xaxisType = 'datetime',
@@ -172,7 +171,7 @@ function TopicDetails({
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
                   <Text size="xsmall">
-                    {format(new Date(item.createdAt), 'yyyy-MM-dd EEEEEE HH:mm:ss')}
+                    {formatDateWeekTime(new Date(item.createdAt))}
                   </Text>
                   <Menu
                     icon={<MoreVertical />}

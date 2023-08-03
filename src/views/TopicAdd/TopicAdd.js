@@ -1,11 +1,11 @@
 import { Button } from 'grommet';
 import React, { useState } from 'react';
 
-import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import InputField from '../../shared/react-pure/InputField';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
+import TextEditor from '../../shared/react/TextEditor';
 
 function TopicAdd({ isLoading, onCreate }) {
   const [title, setTitle] = useState('');

@@ -1,11 +1,11 @@
 import { Button } from 'grommet';
 import React, { useState } from 'react';
 
-import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import DatePicker from '../../shared/react-pure/DatePicker';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
+import TextEditor from '../../shared/react/TextEditor';
 
 function ItemAdd({ topicId, isLoading, onCreate }) {
   const [note, setNote] = useState('');

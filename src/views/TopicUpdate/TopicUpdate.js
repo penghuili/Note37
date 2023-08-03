@@ -1,14 +1,14 @@
 import { Box, Button, RadioButton, Text } from 'grommet';
 import React, { useState } from 'react';
 
-import TextEditor from '../../components/TextEditor';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
+import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
 import InputField from '../../shared/react-pure/InputField';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
-import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
+import TextEditor from '../../shared/react/TextEditor';
 
 function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
   const [title, setTitle] = useState('');

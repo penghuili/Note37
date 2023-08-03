@@ -16,12 +16,12 @@ import initShared from './shared/react/initShared';
 import Toast from './shared/react/Toast';
 import store from './store';
 
+
 initShared({ logo, app: apps.often37.name });
+const theme = createTheme('#e8751a');
 
 setHook('location', useLocation);
 setHook('dispatch', useDispatch);
-
-const theme = createTheme('#e8751a');
 
 function App() {
   return (

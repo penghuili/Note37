@@ -1,10 +1,10 @@
 import { Button, Text } from 'grommet';
 import React, { useState } from 'react';
 
-import TextEditor from '../../components/TextEditor';
 import { formatDateTime } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Spacer from '../../shared/react-pure/Spacer';
+import TextEditor from '../../shared/react/TextEditor';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
