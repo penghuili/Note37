@@ -89,6 +89,23 @@ function TopicDetails({
     onFetchItems({ topicId });
   });
 
+  function renderLoadMore() {
+    if (!topic?.hasMore) {
+      return null;
+    }
+
+    return isLoadingItems ? (
+      <Spinner size="small" />
+    ) : (
+      <Button
+        label="Load more"
+        size="xsmall"
+        icon={<Refresh size="small" color="brand" />}
+        onClick={() => onFetchItems({ topicId, startKey: topic.startKey })}
+      />
+    );
+  }
+
   return (
     <>
       <AppBar title="Topic details" isLoading={isLoading || isLoadingItems} hasBack />
@@ -124,17 +141,7 @@ function TopicDetails({
                   },
                 ]}
               />
-              {!!topic.hasMore &&
-                (isLoadingItems ? (
-                  <Spinner size="small" />
-                ) : (
-                  <Button
-                    label="Load more"
-                    size="xsmall"
-                    icon={<Refresh size="small" color="brand" />}
-                    onClick={() => onFetchItems({ topicId, startKey: topic.startKey })}
-                  />
-                ))}
+              {renderLoadMore()}
             </HorizontalCenter>
 
             <MonthPicker
@@ -170,9 +177,7 @@ function TopicDetails({
             {topic.items?.map(item => (
               <Box key={item.sortKey} margin="0 0 1rem">
                 <HorizontalCenter>
-                  <Text size="xsmall">
-                    {formatDateWeekTime(new Date(item.createdAt))}
-                  </Text>
+                  <Text size="xsmall">{formatDateWeekTime(new Date(item.createdAt))}</Text>
                   <Menu
                     icon={<MoreVertical />}
                     items={[
@@ -199,6 +204,7 @@ function TopicDetails({
                 {!!item.note && <TextEditor editable={false} text={item.note} />}
               </Box>
             ))}
+            {renderLoadMore()}
           </>
         )}
       </ContentWrapper>
