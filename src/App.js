@@ -17,7 +17,7 @@ import Toast from './shared/react/Toast';
 import store from './store';
 
 
-initShared({ logo, app: apps.often37.name });
+initShared({ logo, app: apps.note37.name });
 const theme = createTheme('#e8751a');
 
 setHook('location', useLocation);

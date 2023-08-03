@@ -11,18 +11,18 @@ function Privacy() {
       <AppBar title="Privacy" hasBack />
       <ContentWrapper>
         <Text>
-          1. Often37 encrypts your data by default. You can check how encryption works{' '}
+          1. Note37 encrypts your data by default. You can check how encryption works{' '}
           <Anchor label="here" href="/encryption" target="_blank" />.
         </Text>
 
-        <Text margin="1rem 0 0">2. Often37 has no tracking;</Text>
+        <Text margin="1rem 0 0">2. Note37 has no tracking;</Text>
 
         <Text margin="1rem 0 0">
-          3. Often37 doesn't sell third party ads, and it never sells your data. Often37 makes
-          money through paid customers.
+          3. Note37 doesn't sell third party ads, and it never sells your data. Note37 makes money
+          through paid customers.
         </Text>
 
-        <Text margin="1rem 0 0">4. Often37 doesn't save your payment info;</Text>
+        <Text margin="1rem 0 0">4. Note37 doesn't save your payment info;</Text>
 
         <Text margin="1rem 0 0">
           Contact me for anything:{' '}

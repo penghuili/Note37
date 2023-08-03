@@ -7,10 +7,10 @@ import AppBar from '../../shared/react/AppBar';
 function Encryption() {
   return (
     <>
-      <AppBar title="How encryption works in Often37?" hasBack />
+      <AppBar title="How encryption works in Note37?" hasBack />
       <ContentWrapper>
         <Text margin="3rem 0 0">
-          Often37 uses the famous{' '}
+          Note37 uses the famous{' '}
           <Anchor label="openpgpjs" href="https://github.com/openpgpjs/openpgpjs" target="_blank" />{' '}
           algorithm (used by <Anchor label="Proton" href="https://proton.me/" target="_blank" />) to
           do the end-to-end encryption. See what is PGP{' '}

@@ -16,7 +16,7 @@ function Topics({ topics, isLoading, onFetch }) {
 
   return (
     <>
-      <AppBar title="Often37" isLoading={isLoading} />
+      <AppBar title="Note37" isLoading={isLoading} />
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink to="/topics/add" label="Create topic" color="status-ok" margin="0 1rem 0 0" />

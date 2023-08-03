@@ -154,7 +154,7 @@ function TopicDetails({
                   options={getChartOptions({
                     xaxisType: 'category',
                     xaxisRotate: 0,
-                    colors: [apps.often37.color],
+                    colors: [apps.note37.color],
                     tickAmount: 1,
                     yFormatter: value => `${+value.toFixed(2)} days`,
                   })}

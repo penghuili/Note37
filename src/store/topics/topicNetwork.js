@@ -13,7 +13,7 @@ import HTTP from '../../shared/react/HTTP';
 
 export async function fetchTopics() {
   try {
-    const topics = await HTTP.get(apps.often37.name, `/v1/topics`);
+    const topics = await HTTP.get(apps.note37.name, `/v1/topics`);
 
     const decryptedTopics = [];
     await asyncForEach(topics, async item => {
@@ -39,7 +39,7 @@ export async function createTopic({ title, note }) {
       password
     );
 
-    const data = await HTTP.post(apps.often37.name, `/v1/topics`, {
+    const data = await HTTP.post(apps.note37.name, `/v1/topics`, {
       password: encryptedPassword,
       title: encryptedTitle,
       note: encryptedNote,
@@ -60,7 +60,7 @@ export async function updateTopic(topicId, decryptedPassword, { title, note, sho
       decryptedPassword
     );
 
-    const data = await HTTP.put(apps.often37.name, `/v1/topics/${topicId}`, {
+    const data = await HTTP.put(apps.note37.name, `/v1/topics/${topicId}`, {
       title: encryptedTitle,
       note: encryptedNote,
       showChart,
@@ -83,7 +83,7 @@ export async function fetchItems(topicId, { startKey, month }, decryptedPassword
       startKey: newStartKey,
       limit,
     } = await HTTP.get(
-      apps.often37.name,
+      apps.note37.name,
       `/v1/topics/${topicId}/items${
         queryStartKey || queryMonth ? `?${queryStartKey}${queryMonth}` : ''
       }`
@@ -112,7 +112,7 @@ export async function createItem(topicId, decryptedPassword, { note, date }) {
   try {
     const { note: encryptedNote } = await encryptItemContent({ note }, decryptedPassword);
 
-    const data = await HTTP.post(apps.often37.name, `/v1/topics/${topicId}/items`, {
+    const data = await HTTP.post(apps.note37.name, `/v1/topics/${topicId}/items`, {
       note: encryptedNote,
       date,
     });
@@ -129,7 +129,7 @@ export async function updateItem(topicId, itemId, decryptedPassword, { note }) {
   try {
     const { note: encryptedNote } = await encryptItemContent({ note }, decryptedPassword);
 
-    const data = await HTTP.put(apps.often37.name, `/v1/topics/${topicId}/items/${itemId}`, {
+    const data = await HTTP.put(apps.note37.name, `/v1/topics/${topicId}/items/${itemId}`, {
       note: encryptedNote,
     });
 
@@ -143,7 +143,7 @@ export async function updateItem(topicId, itemId, decryptedPassword, { note }) {
 
 export async function deleteItem(topicId, itemId) {
   try {
-    const data = await HTTP.delete(apps.often37.name, `/v1/topics/${topicId}/items/${itemId}`);
+    const data = await HTTP.delete(apps.note37.name, `/v1/topics/${topicId}/items/${itemId}`);
 
     return { data, error: null };
   } catch (error) {
