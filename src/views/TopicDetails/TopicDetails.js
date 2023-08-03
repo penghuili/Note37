@@ -95,7 +95,7 @@ function TopicDetails({
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink
-            to={`/t/${topicId}/items/add`}
+            to={`/topics/${topicId}/items/add`}
             label="Create item"
             color="status-ok"
             margin="0 1rem 0 0"
@@ -113,7 +113,7 @@ function TopicDetails({
                 items={[
                   {
                     label: 'Update',
-                    onClick: () => onNav(`/t/${topicId}/update`),
+                    onClick: () => onNav(`/topics/${topicId}/update`),
                     margin: '0.25rem 0',
                   },
                   {
@@ -178,7 +178,7 @@ function TopicDetails({
                     items={[
                       {
                         label: 'Update',
-                        onClick: () => onNav(`/t/${topicId}/items/${item.sortKey}/update`),
+                        onClick: () => onNav(`/topics/${topicId}/items/${item.sortKey}/update`),
                         margin: '0.25rem 0',
                       },
                       {

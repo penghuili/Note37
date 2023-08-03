@@ -19,7 +19,7 @@ function Topics({ topics, isLoading, onFetch }) {
       <AppBar title="Often37" isLoading={isLoading} />
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
-          <RouteLink to="/t/add" label="Create topic" color="status-ok" margin="0 1rem 0 0" />
+          <RouteLink to="/topics/add" label="Create topic" color="status-ok" margin="0 1rem 0 0" />
         </HorizontalCenter>
         <Divider />
         <Spacer />
@@ -28,7 +28,7 @@ function Topics({ topics, isLoading, onFetch }) {
           <Box direction="row" wrap>
             {topics.map(topic => (
               <Box key={topic.sortKey} margin="0 1rem 1rem 0">
-                <RouteLink to={`/t/${topic.sortKey}`} label={topic.title} />
+                <RouteLink to={`/topics/${topic.sortKey}`} label={topic.title} />
               </Box>
             ))}
           </Box>
