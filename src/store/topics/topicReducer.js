@@ -3,6 +3,7 @@ import uniqBy from 'lodash.uniqby';
 import { formatDate } from '../../shared/js/date';
 import { sharedActionTypes } from '../../shared/react/store/sharedActions';
 import { topicActionTypes } from './topicActions';
+import { orderByPosition } from '../../shared/js/position';
 
 const initialState = {
   isLoading: false,
@@ -42,7 +43,7 @@ function handleUpdateTopicSucceeded(state, { topicId, topic }) {
     }
     return t;
   });
-  return { ...state, topics };
+  return { ...state, topics: orderByPosition(topics) };
 }
 
 function splitTime(newerTime, olderTime) {

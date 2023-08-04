@@ -20,6 +20,9 @@ function Topics({ topics, isLoading, onFetch }) {
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink to="/topics/add" label="Create topic" color="status-ok" margin="0 1rem 0 0" />
+          {topics?.length > 1 && (
+            <RouteLink to="/topics/reorder" label="Re-order topics" color="status-ok" />
+          )}
         </HorizontalCenter>
         <Divider />
         <Spacer />

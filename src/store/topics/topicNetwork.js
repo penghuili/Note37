@@ -53,7 +53,11 @@ export async function createTopic({ title, note }) {
   }
 }
 
-export async function updateTopic(topicId, decryptedPassword, { title, note, showChart }) {
+export async function updateTopic(
+  topicId,
+  decryptedPassword,
+  { title, note, showChart, position }
+) {
   try {
     const { title: encryptedTitle, note: encryptedNote } = await encryptTopicContent(
       { title, note },
@@ -64,6 +68,7 @@ export async function updateTopic(topicId, decryptedPassword, { title, note, sho
       title: encryptedTitle,
       note: encryptedNote,
       showChart,
+      position,
     });
 
     const decrypted = await decryptTopicContent(data);

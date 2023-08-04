@@ -53,7 +53,9 @@ function* handleCreateTopicPressed({ payload: { title, note } }) {
   yield put(topicActionCreators.isLoading(false));
 }
 
-function* handleUpdateTopicPressed({ payload: { topicId, title, note, showChart } }) {
+function* handleUpdateTopicPressed({
+  payload: { topicId, title, note, showChart, position, stayOnPage },
+}) {
   const topic = yield call(makeSureTopicIsFetched, topicId);
 
   yield put(topicActionCreators.isLoading(true));
@@ -62,10 +64,13 @@ function* handleUpdateTopicPressed({ payload: { topicId, title, note, showChart 
     title,
     note,
     showChart,
+    position,
   });
   if (data) {
     yield put(topicActionCreators.updateTopicSucceeded(topicId, data));
-    yield call(routeHelpers.goBack);
+    if (!stayOnPage) {
+      yield call(routeHelpers.goBack);
+    }
   }
 
   yield put(topicActionCreators.isLoading(false));

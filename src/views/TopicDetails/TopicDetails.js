@@ -133,12 +133,6 @@ function TopicDetails({
                     onClick: () => onNav(`/topics/${topicId}/update`),
                     margin: '0.25rem 0',
                   },
-                  {
-                    label: 'Delete',
-                    onClick: () => {},
-                    margin: '0.25rem 0',
-                    color: 'status-critical',
-                  },
                 ]}
               />
               {renderLoadMore()}
