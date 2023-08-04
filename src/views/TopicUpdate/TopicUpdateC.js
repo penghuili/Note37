@@ -6,12 +6,13 @@ import TopicUpdate from './TopicUpdate';
 
 const mapStateToProps = (state, { params: { topicId } }) => ({
   topicId,
-  topic: topicSelectors.getTopic(state, topicId),
+  topic: topicSelectors.getEditingTopic(state),
   isLoading: topicSelectors.isLoading(state),
 });
 
 const mapDispatchToProps = {
-  onFetchTopics: topicActionCreators.fetchTopicsRequested,
+  onFetchTopic: topicActionCreators.fetchTopicRequested,
+  onSetEditingTopic: topicActionCreators.setEditingTopic,
   onUpdate: topicActionCreators.updateTopicPressed,
 };
 

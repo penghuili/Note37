@@ -27,6 +27,18 @@ export async function fetchTopics() {
   }
 }
 
+export async function fetchTopic(topicId) {
+  try {
+    const topic = await HTTP.get(apps.note37.name, `/v1/topics/${topicId}`);
+
+    const decrypted = await decryptTopicContent(topic);
+
+    return { data: decrypted, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
 export async function createTopic({ title, note }) {
   try {
     const password = generatePassword(20, true);
@@ -113,6 +125,18 @@ export async function fetchItems(topicId, { startKey, month }, decryptedPassword
   }
 }
 
+export async function fetchItem(topicId, itemId, decryptedPassword) {
+  try {
+    const item = await HTTP.get(apps.note37.name, `/v1/topics/${topicId}/items/${itemId}`);
+
+    const decrypted = await decryptItemContent(item, decryptedPassword);
+
+    return { data: decrypted, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
 export async function createItem(topicId, decryptedPassword, { note, date }) {
   try {
     const { note: encryptedNote } = await encryptItemContent({ note }, decryptedPassword);
@@ -182,6 +206,7 @@ async function decryptTopicContent(data) {
     title: decryptedTitle,
     note: decryptedNote,
     decryptedPassword,
+    items: [],
   };
 }
 

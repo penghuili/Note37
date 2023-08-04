@@ -4,12 +4,16 @@ export const topicActionTypes = {
   IS_DELETING_ITEM: 'topic/IS_DELETING_ITEM',
   FETCH_TOPICS_REQUESTED: 'topic/FETCH_TOPICS_REQUESTED',
   FETCH_TOPICS_SUCCEEDED: 'topic/FETCH_TOPICS_SUCCEEDED',
+  FETCH_TOPIC_REQUESTED: 'topic/FETCH_TOPIC_REQUESTED',
+  SET_EDITING_TOPIC: 'topic/SET_EDITING_TOPIC',
   CREATE_TOPIC_PRESSED: 'topic/CREATE_TOPIC_PRESSED',
   CREATE_TOPIC_SUCCEEDED: 'topic/CREATE_TOPIC_SUCCEEDED',
   UPDATE_TOPIC_PRESSED: 'topic/UPDATE_TOPIC_PRESSED',
   UPDATE_TOPIC_SUCCEEDED: 'topic/UPDATE_TOPIC_SUCCEEDED',
   FETCH_ITEMS_REQUESTED: 'topic/FETCH_ITEMS_REQUESTED',
   FETCH_ITEMS_SUCCEEDED: 'topic/FETCH_ITEMS_SUCCEEDED',
+  FETCH_ITEM_REQUESTED: 'topic/FETCH_ITEM_REQUESTED',
+  SET_EDITING_ITEM: 'topic/SET_EDITING_ITEM',
   MONTH_CHANGED: 'topic/YEAR_MONTH_CHANGED',
   CREATE_ITEM_PRESSED: 'topic/CREATE_ITEM_PRESSED',
   CREATE_ITEM_SUCCEEDED: 'topic/CREATE_ITEM_SUCCEEDED',
@@ -34,6 +38,12 @@ export const topicActionCreators = {
   },
   fetchTopicsSucceeded(topics) {
     return { type: topicActionTypes.FETCH_TOPICS_SUCCEEDED, payload: { topics } };
+  },
+  fetchTopicRequested(topicId) {
+    return { type: topicActionTypes.FETCH_TOPIC_REQUESTED, payload: { topicId } };
+  },
+  setEditingTopic(topic) {
+    return { type: topicActionTypes.SET_EDITING_TOPIC, payload: { topic } };
   },
   createTopicPressed(title, note) {
     return { type: topicActionTypes.CREATE_TOPIC_PRESSED, payload: { title, note } };
@@ -61,6 +71,12 @@ export const topicActionCreators = {
       type: topicActionTypes.FETCH_ITEMS_SUCCEEDED,
       payload: { topicId, items, startKey, hasMore },
     };
+  },
+  fetchItemRequested(topicId, itemId) {
+    return { type: topicActionTypes.FETCH_ITEM_REQUESTED, payload: { topicId, itemId } };
+  },
+  setEditingItem(item) {
+    return { type: topicActionTypes.SET_EDITING_ITEM, payload: { item } };
   },
   monthChanged(topicId, month) {
     return { type: topicActionTypes.MONTH_CHANGED, payload: { topicId, month } };

@@ -10,7 +10,7 @@ import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
 import TextEditor from '../../shared/react/TextEditor';
 
-function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
+function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopic, onUpdate }) {
   const [title, setTitle] = useState('');
   useListener(topic?.title, value => setTitle(value || ''));
   const [note, setNote] = useState('');
@@ -19,7 +19,11 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopics, onUpdate }) {
   useListener(topic?.showChart, value => setShowChart(!!value));
 
   useEffectOnce(() => {
-    onFetchTopics(topicId);
+    onFetchTopic(topicId);
+
+    return () => {
+      onSetEditingTopic(null);
+    };
   });
 
   return (

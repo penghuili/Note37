@@ -10,6 +10,8 @@ const initialState = {
   isLoadingItems: false,
   isDeletingItem: false,
   topics: [],
+  editingTopic: null,
+  editingItem: null,
 };
 
 function handleIsLoading(state, { value }) {
@@ -30,6 +32,10 @@ function handleReset() {
 
 function handleFetchTopicsSucceeded(state, { topics }) {
   return { ...state, topics };
+}
+
+function handleSetEditingTopic(state, { topic }) {
+  return { ...state, editingTopic: topic };
 }
 
 function handleCreateTopicSucceeded(state, { topic }) {
@@ -101,6 +107,10 @@ function handleFetchItemsSucceeded(state, { topicId, items, startKey, hasMore })
   return { ...state, topics };
 }
 
+function handleSetEditingItem(state, { item }) {
+  return { ...state, editingItem: item };
+}
+
 function handleMonthChanged(state, { topicId, month }) {
   return {
     ...state,
@@ -167,6 +177,9 @@ export function topicReducer(state = initialState, action) {
     case topicActionTypes.FETCH_TOPICS_SUCCEEDED:
       return handleFetchTopicsSucceeded(state, action.payload);
 
+    case topicActionTypes.SET_EDITING_TOPIC:
+      return handleSetEditingTopic(state, action.payload);
+
     case topicActionTypes.CREATE_TOPIC_SUCCEEDED:
       return handleCreateTopicSucceeded(state, action.payload);
 
@@ -175,6 +188,9 @@ export function topicReducer(state = initialState, action) {
 
     case topicActionTypes.FETCH_ITEMS_SUCCEEDED:
       return handleFetchItemsSucceeded(state, action.payload);
+
+    case topicActionTypes.SET_EDITING_ITEM:
+      return handleSetEditingItem(state, action.payload);
 
     case topicActionTypes.MONTH_CHANGED:
       return handleMonthChanged(state, action.payload);

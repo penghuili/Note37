@@ -7,7 +7,9 @@ import {
   createItem,
   createTopic,
   deleteItem,
+  fetchItem,
   fetchItems,
+  fetchTopic,
   fetchTopics,
   updateItem,
   updateTopic,
@@ -25,6 +27,17 @@ function* handleFetchTopicsRequested() {
   const { data } = yield call(fetchTopics);
   if (data) {
     yield put(topicActionCreators.fetchTopicsSucceeded(data));
+  }
+
+  yield put(topicActionCreators.isLoading(false));
+}
+
+function* handleFetchTopicRequested({ payload: { topicId } }) {
+  yield put(topicActionCreators.isLoading(true));
+
+  const { data } = yield call(fetchTopic, topicId);
+  if (data) {
+    yield put(topicActionCreators.setEditingTopic(data));
   }
 
   yield put(topicActionCreators.isLoading(false));
@@ -94,6 +107,22 @@ function* handleFetchItemsRequested({ payload: { topicId, startKey, month } }) {
   yield put(topicActionCreators.isLoadingItems(false));
 }
 
+function* handleFetchItemRequested({ payload: { topicId, itemId } }) {
+  const topic = yield call(makeSureTopicIsFetched, topicId);
+  if (!topic) {
+    return;
+  }
+
+  yield put(topicActionCreators.isLoading(true));
+
+  const { data } = yield call(fetchItem, topicId, itemId, topic.decryptedPassword);
+  if (data) {
+    yield put(topicActionCreators.setEditingItem(data));
+  }
+
+  yield put(topicActionCreators.isLoading(false));
+}
+
 function* handleMonthChanged({ payload: { topicId, month } }) {
   if (month === ALL) {
     yield put(topicActionCreators.fetchItemsRequested({ topicId }));
@@ -145,9 +174,11 @@ function* handleDeleteItemPressed({ payload: { topicId, itemId } }) {
 export function* topicSagas() {
   yield all([
     takeLatest(topicActionTypes.FETCH_TOPICS_REQUESTED, handleFetchTopicsRequested),
+    takeLatest(topicActionTypes.FETCH_TOPIC_REQUESTED, handleFetchTopicRequested),
     takeLatest(topicActionTypes.CREATE_TOPIC_PRESSED, handleCreateTopicPressed),
     takeLatest(topicActionTypes.UPDATE_TOPIC_PRESSED, handleUpdateTopicPressed),
     takeLatest(topicActionTypes.FETCH_ITEMS_REQUESTED, handleFetchItemsRequested),
+    takeLatest(topicActionTypes.FETCH_ITEM_REQUESTED, handleFetchItemRequested),
     takeLatest(topicActionTypes.MONTH_CHANGED, handleMonthChanged),
     takeLatest(topicActionTypes.CREATE_ITEM_PRESSED, handleCreateItemPressed),
     takeLatest(topicActionTypes.UPDATE_ITEM_PRESSED, handleUpdateItemPressed),

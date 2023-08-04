@@ -7,12 +7,13 @@ import ItemUpdate from './ItemUpdate';
 const mapStateToProps = (state, { params: { topicId, itemId } }) => ({
   topicId,
   itemId,
-  item: topicSelectors.getItem(state, topicId, itemId),
+  item: topicSelectors.getEditingItem(state),
   isLoading: topicSelectors.isLoading(state),
 });
 
 const mapDispatchToProps = {
-  onFetchItems: topicActionCreators.fetchItemsRequested,
+  onFetchItem: topicActionCreators.fetchItemRequested,
+  onSetEditingItem: topicActionCreators.setEditingItem,
   onUpdate: topicActionCreators.updateItemPressed,
 };
 
