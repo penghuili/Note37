@@ -1,8 +1,7 @@
-import { Box, Button, RadioButton, Text } from 'grommet';
+import { Button } from 'grommet';
 import React, { useState } from 'react';
 
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
-import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
 import InputField from '../../shared/react-pure/InputField';
 import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
@@ -15,8 +14,6 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopi
   useListener(topic?.title, value => setTitle(value || ''));
   const [note, setNote] = useState('');
   useListener(topic?.note, value => setNote(value || ''));
-  const [showChart, setShowChart] = useState(true);
-  useListener(topic?.showChart, value => setShowChart(!!value));
 
   useEffectOnce(() => {
     onFetchTopic(topicId);
@@ -36,30 +33,10 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopi
         <TextEditor text={note} onChange={setNote} />
 
         <Spacer />
-        <Text>Show chart:</Text>
-        <HorizontalCenter>
-          <RadioButton
-            name="dark"
-            checked={showChart}
-            label="Yes"
-            onChange={() => setShowChart(true)}
-            disabled={isLoading}
-          />
-          <Box width="1rem" />
-          <RadioButton
-            name="light"
-            checked={!showChart}
-            label="No"
-            onChange={() => setShowChart(false)}
-            disabled={isLoading}
-          />
-        </HorizontalCenter>
-
-        <Spacer />
         <Button
           label="Update topic"
           onClick={() => {
-            onUpdate(topicId, { title, note, showChart });
+            onUpdate(topicId, { title, note });
           }}
           disabled={!title || isLoading}
         />

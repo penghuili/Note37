@@ -15,6 +15,7 @@ import ItemAdd from '../views/ItemAdd';
 import ItemUpdate from '../views/ItemUpdate';
 import Privacy from '../views/Privacy';
 import TopicAdd from '../views/TopicAdd';
+import TopicChart from '../views/TopicChart';
 import TopicDetails from '../views/TopicDetails';
 import Topics from '../views/Topics';
 import TopicsReorder from '../views/TopicsReorder';
@@ -37,6 +38,7 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
         <Route path="/topics/reorder" component={TopicsReorder} />
         <Route path="/topics/:topicId" component={TopicDetails} />
         <Route path="/topics/:topicId/update" component={TopicUpdate} />
+        <Route path="/topics/:topicId/chart" component={TopicChart} />
         <Route path="/topics/:topicId/items/add" component={ItemAdd} />
         <Route path="/topics/:topicId/items/:itemId/update" component={ItemUpdate} />
 

@@ -51,10 +51,10 @@ export const topicActionCreators = {
   createTopicSucceeded(topic) {
     return { type: topicActionTypes.CREATE_TOPIC_SUCCEEDED, payload: { topic } };
   },
-  updateTopicPressed(topicId, { title, note, showChart, position, stayOnPage }) {
+  updateTopicPressed(topicId, { title, note, position, stayOnPage }) {
     return {
       type: topicActionTypes.UPDATE_TOPIC_PRESSED,
-      payload: { topicId, title, note, showChart, position, stayOnPage },
+      payload: { topicId, title, note, position, stayOnPage },
     };
   },
   updateTopicSucceeded(topicId, topic) {

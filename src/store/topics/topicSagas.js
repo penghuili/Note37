@@ -66,9 +66,7 @@ function* handleCreateTopicPressed({ payload: { title, note } }) {
   yield put(topicActionCreators.isLoading(false));
 }
 
-function* handleUpdateTopicPressed({
-  payload: { topicId, title, note, showChart, position, stayOnPage },
-}) {
+function* handleUpdateTopicPressed({ payload: { topicId, title, note, position, stayOnPage } }) {
   const topic = yield call(makeSureTopicIsFetched, topicId);
 
   yield put(topicActionCreators.isLoading(true));
@@ -76,7 +74,6 @@ function* handleUpdateTopicPressed({
   const { data } = yield call(updateTopic, topicId, topic.decryptedPassword, {
     title,
     note,
-    showChart,
     position,
   });
   if (data) {
