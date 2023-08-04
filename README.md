@@ -1,3 +1,3 @@
-# Starter37
+# Note37
 
-This is a starter project for my own projects.
+Rich text notes. Encrypted.

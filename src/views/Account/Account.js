@@ -39,6 +39,12 @@ function Account({ account, isLoadingAccount, onLogOut }) {
             <Spacer />
             <RouteLink label="Privacy" to="/privacy" />
             <Spacer />
+            <Anchor
+              label="Source code"
+              href="https://github.com/penghuili/Note37"
+              target="_blank"
+            />
+            <Spacer />
             <Anchor label="Contact" href="https://peng37.com/contact" target="_blank" />
             <Spacer />
             <Divider />
