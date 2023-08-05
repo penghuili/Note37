@@ -25,7 +25,7 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopi
 
   return (
     <>
-      <AppBar title="Update topic" hasBack />
+      <AppBar title="Update topic" hasBack isLoading={isLoading} />
       <ContentWrapper>
         <InputField label="Title" placeholder="Title" value={title} onChange={setTitle} />
 
