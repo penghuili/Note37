@@ -7,7 +7,7 @@ import ItemUpdate from './ItemUpdate';
 const mapStateToProps = (state, { params: { topicId, itemId } }) => ({
   topicId,
   itemId,
-  item: topicSelectors.getEditingItem(state),
+  item: topicSelectors.getEditingItem(state) || topicSelectors.getItem(state, topicId, itemId),
   isLoading: topicSelectors.isLoading(state),
 });
 
