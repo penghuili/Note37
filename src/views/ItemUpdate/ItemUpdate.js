@@ -18,7 +18,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onSetEditin
     onUpdate({ topicId, itemId, note: newNote, goBack: false });
   }
 
-  const [note, setNote] = useAutoSave(handleAutoSave, 1000);
+  const [note, setNote] = useAutoSave(handleAutoSave, 2000);
   useListener(item?.note, value => setNote(value || ''));
 
   useEffectOnce(() => {
