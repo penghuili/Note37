@@ -1,5 +1,5 @@
-import { Box, Menu, Spinner, Text } from 'grommet';
-import { MoreVertical } from 'grommet-icons';
+import { Box, Button, Menu, Spinner, Text } from 'grommet';
+import { Edit, MoreVertical } from 'grommet-icons';
 import React from 'react';
 
 import GapAndAgo from '../../../components/GapAndAgo';
@@ -14,18 +14,18 @@ function NoteItem({ item, topicId, isDeleting, onDelete, onNav }) {
     <Box key={item.sortKey} margin="0 0 1rem">
       <HorizontalCenter>
         <Text size="xsmall">{formatDateWeekTime(new Date(item.createdAt))}</Text>
+        <Button
+          icon={<Edit />}
+          onClick={() => onNav(`/topics/${topicId}/items/${item.sortKey}/update`)}
+          margin="0 0 0 1rem"
+          size="small"
+        />
         <Menu
           icon={<MoreVertical />}
           items={[
             {
-              label: 'Update',
-              onClick: () => onNav(`/topics/${topicId}/items/${item.sortKey}/update`),
-              margin: '0.25rem 0',
-            },
-            {
               label: 'Delete',
               onClick: onDelete,
-              margin: '0.25rem 0',
               color: 'status-critical',
             },
           ]}
