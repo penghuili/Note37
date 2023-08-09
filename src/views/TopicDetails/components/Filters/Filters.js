@@ -5,7 +5,15 @@ import HorizontalCenter from '../../../../shared/react-pure/HorizontalCenter';
 import LoadMore from '../LoadMore';
 import { Box } from 'grommet';
 
-function Filters({ topicId, topic, month, isLoadingItems, onFetchItems, onMonthChange }) {
+function Filters({
+  topicId,
+  topic,
+  month,
+  showLoadMore = true,
+  isLoadingItems,
+  onFetchItems,
+  onMonthChange,
+}) {
   if (!topic) {
     return null;
   }
@@ -18,8 +26,12 @@ function Filters({ topicId, topic, month, isLoadingItems, onFetchItems, onMonthC
         value={month}
         onChange={value => onMonthChange(topicId, value)}
       />
-      <Box width="1rem" />
-      <LoadMore topic={topic} isLoadingItems={isLoadingItems} onFetchItems={onFetchItems} />
+      {showLoadMore && (
+        <>
+          <Box width="1rem" />
+          <LoadMore topic={topic} isLoadingItems={isLoadingItems} onFetchItems={onFetchItems} />
+        </>
+      )}
     </HorizontalCenter>
   );
 }

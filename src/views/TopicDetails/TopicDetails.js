@@ -1,9 +1,7 @@
-import { Box, Heading, Menu, Spinner, Text } from 'grommet';
+import { Box, Heading, Menu, Text } from 'grommet';
 import { MoreVertical } from 'grommet-icons';
 import React, { useState } from 'react';
 
-import GapAndAgo from '../../components/GapAndAgo';
-import { formatDateWeekTime } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Divider from '../../shared/react-pure/Divider';
 import HorizontalCenter from '../../shared/react-pure/HorizontalCenter';
@@ -11,9 +9,9 @@ import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import RouteLink from '../../shared/react/RouteLink';
-import TextEditor from '../../shared/react/TextEditor';
 import Filters from './components/Filters';
 import LoadMore from './components/LoadMore';
+import NoteItem from './components/NoteItem';
 
 function TopicDetails({
   topicId,
@@ -69,7 +67,7 @@ function TopicDetails({
             </HorizontalCenter>
 
             <Spacer />
-            <Filters topicId={topicId} />
+            <Filters topicId={topicId} showLoadMore={false} />
             <Spacer />
 
             {!isLoadingItems && !topic.items?.length && (
@@ -78,34 +76,17 @@ function TopicDetails({
               </Box>
             )}
             {topic.items?.map(item => (
-              <Box key={item.sortKey} margin="0 0 1rem">
-                <HorizontalCenter>
-                  <Text size="xsmall">{formatDateWeekTime(new Date(item.createdAt))}</Text>
-                  <Menu
-                    icon={<MoreVertical />}
-                    items={[
-                      {
-                        label: 'Update',
-                        onClick: () => onNav(`/topics/${topicId}/items/${item.sortKey}/update`),
-                        margin: '0.25rem 0',
-                      },
-                      {
-                        label: 'Delete',
-                        onClick: () => {
-                          setDeletingItemId(item.sortKey);
-                          onDeleteItem(topicId, item.sortKey);
-                        },
-                        margin: '0.25rem 0',
-                        color: 'status-critical',
-                      },
-                    ]}
-                  />
-                  {deletingItemId === item.sortKey && isDeletingItem && <Spinner size="small" />}
-                </HorizontalCenter>
-                <GapAndAgo gap={item.gap} ago={item.ago} />
-                <Spacer />
-                {!!item.note && <TextEditor editable={false} text={item.note} />}
-              </Box>
+              <NoteItem
+                key={item.sortKey}
+                item={item}
+                topicId={topicId}
+                isDeleting={deletingItemId === item.sortKey && isDeletingItem}
+                onDelete={() => {
+                  setDeletingItemId(item.sortKey);
+                  onDeleteItem(topicId, item.sortKey);
+                }}
+                onNav={() => onNav(`/topics/${topicId}/items/${item.sortKey}/update`)}
+              />
             ))}
             <LoadMore topic={topic} isLoadingItems={isLoadingItems} onFetchItems={onFetchItems} />
           </>
