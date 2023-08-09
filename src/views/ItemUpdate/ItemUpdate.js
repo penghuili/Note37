@@ -1,16 +1,24 @@
 import { Button, Text } from 'grommet';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { formatDateTime } from '../../shared/js/date';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
 import Spacer from '../../shared/react-pure/Spacer';
-import TextEditor from '../../shared/react/TextEditor';
 import AppBar from '../../shared/react/AppBar';
+import useAutoSave from '../../shared/react/hooks/useAutoSave';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
+import TextEditor from '../../shared/react/TextEditor';
 
 function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onSetEditingItem, onUpdate }) {
-  const [note, setNote] = useState('');
+  function handleAutoSave(newNote) {
+    if (newNote === item?.note) {
+      return;
+    }
+    onUpdate({ topicId, itemId, note: newNote, goBack: false });
+  }
+
+  const [note, setNote] = useAutoSave(handleAutoSave, 1000);
   useListener(item?.note, value => setNote(value || ''));
 
   useEffectOnce(() => {
@@ -32,7 +40,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onSetEditin
         <Button
           label="Update item"
           onClick={() => {
-            onUpdate(topicId, itemId, note);
+            onUpdate({ topicId, itemId, note, goBack: true });
           }}
           disabled={isLoading}
         />

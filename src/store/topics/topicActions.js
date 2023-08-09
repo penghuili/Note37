@@ -87,8 +87,11 @@ export const topicActionCreators = {
   createItemSucceeded(topicId, item) {
     return { type: topicActionTypes.CREATE_ITEM_SUCCEEDED, payload: { topicId, item } };
   },
-  updateItemPressed(topicId, itemId, note) {
-    return { type: topicActionTypes.UPDATE_ITEM_PRESSED, payload: { topicId, itemId, note } };
+  updateItemPressed({ topicId, itemId, note, goBack }) {
+    return {
+      type: topicActionTypes.UPDATE_ITEM_PRESSED,
+      payload: { topicId, itemId, note, goBack },
+    };
   },
   updateItemSucceeded(topicId, itemId, item) {
     return { type: topicActionTypes.UPDATE_ITEM_SUCCEEDED, payload: { topicId, itemId, item } };

@@ -143,7 +143,7 @@ function* handleCreateItemPressed({ payload: { topicId, note, date } }) {
   yield put(topicActionCreators.isLoading(false));
 }
 
-function* handleUpdateItemPressed({ payload: { topicId, itemId, note } }) {
+function* handleUpdateItemPressed({ payload: { topicId, itemId, note, goBack } }) {
   const topic = yield call(makeSureTopicIsFetched, topicId);
 
   yield put(topicActionCreators.isLoading(true));
@@ -151,7 +151,9 @@ function* handleUpdateItemPressed({ payload: { topicId, itemId, note } }) {
   const { data } = yield call(updateItem, topicId, itemId, topic.decryptedPassword, { note });
   if (data) {
     yield put(topicActionCreators.updateItemSucceeded(topicId, itemId, data));
-    yield call(routeHelpers.goBack);
+    if (goBack) {
+      yield call(routeHelpers.goBack);
+    }
   }
 
   yield put(topicActionCreators.isLoading(false));
