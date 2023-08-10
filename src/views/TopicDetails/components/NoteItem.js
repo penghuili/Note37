@@ -9,7 +9,7 @@ import ShowMoreWrapper from '../../../shared/react-pure/ShowMoreWrapper';
 import Spacer from '../../../shared/react-pure/Spacer';
 import TextEditor from '../../../shared/react/TextEditor';
 
-function NoteItem({ item, topicId, isDeleting, onDelete, onNav }) {
+function NoteItem({ item, topicId, isDeleting, onUpdate, onDelete, onNav }) {
   return (
     <Box key={item.sortKey} margin="0 0 1rem">
       <HorizontalCenter>
@@ -36,7 +36,13 @@ function NoteItem({ item, topicId, isDeleting, onDelete, onNav }) {
       <Spacer />
       {!!item.note && (
         <ShowMoreWrapper>
-          <TextEditor editable={false} text={item.note} />
+          <TextEditor
+            editable={false}
+            text={item.note}
+            onReadOnlyChecked={content => {
+              onUpdate(content);
+            }}
+          />
         </ShowMoreWrapper>
       )}
     </Box>

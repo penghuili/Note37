@@ -126,6 +126,7 @@ export async function fetchItem(topicId, itemId, decryptedPassword) {
     const item = await HTTP.get(apps.note37.name, `/v1/topics/${topicId}/items/${itemId}`);
 
     const decrypted = await decryptItemContent(item, decryptedPassword);
+    console.log(decrypted)
 
     return { data: decrypted, error: null };
   } catch (error) {
@@ -152,6 +153,7 @@ export async function createItem(topicId, decryptedPassword, { note, date }) {
 
 export async function updateItem(topicId, itemId, decryptedPassword, { note }) {
   try {
+    console.log(note)
     const { note: encryptedNote } = await encryptItemContent({ note }, decryptedPassword);
 
     const data = await HTTP.put(apps.note37.name, `/v1/topics/${topicId}/items/${itemId}`, {

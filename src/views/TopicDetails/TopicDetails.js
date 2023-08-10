@@ -20,6 +20,7 @@ function TopicDetails({
   isLoadingItems,
   isDeletingItem,
   onFetchItems,
+  onUpdateItem,
   onDeleteItem,
   onNav,
 }) {
@@ -81,6 +82,9 @@ function TopicDetails({
                 item={item}
                 topicId={topicId}
                 isDeleting={deletingItemId === item.sortKey && isDeletingItem}
+                onUpdate={content => {
+                  onUpdateItem({ topicId, itemId: item.sortKey, note: content, goBack: false });
+                }}
                 onDelete={() => {
                   setDeletingItemId(item.sortKey);
                   onDeleteItem(topicId, item.sortKey);

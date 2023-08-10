@@ -16,6 +16,7 @@ const mapStateToProps = (state, { params: { topicId } }) => ({
 const mapDispatchToProps = {
   onFetchItems: topicActionCreators.fetchItemsRequested,
   onDeleteItem: topicActionCreators.deleteItemPressed,
+  onUpdateItem: topicActionCreators.updateItemPressed,
   onNav: sharedActionCreators.navigate,
   onToast: sharedActionCreators.setToast,
 };
