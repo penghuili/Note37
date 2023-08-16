@@ -1,20 +1,20 @@
 import { connect } from 'react-redux';
 
-import { topicActionCreators } from '../../store/topics/topicActions';
-import { topicSelectors } from '../../store/topics/topicSelectors';
+import { itemActions, itemSelectors } from '../../store/item/itemStore';
 import ItemUpdate from './ItemUpdate';
 
 const mapStateToProps = (state, { params: { topicId, itemId } }) => ({
   topicId,
   itemId,
-  item: topicSelectors.getEditingItem(state) || topicSelectors.getItem(state, topicId, itemId),
-  isLoading: topicSelectors.isLoading(state),
+  item:
+    itemSelectors.data.getStandaloneItem(state, topicId) ||
+    itemSelectors.data.getItem(state, topicId, itemId),
+  isLoading: itemSelectors.fetchItem.isPending(state, topicId),
 });
 
 const mapDispatchToProps = {
-  onFetchItem: topicActionCreators.fetchItemRequested,
-  onSetEditingItem: topicActionCreators.setEditingItem,
-  onUpdate: topicActionCreators.updateItemPressed,
+  onFetchItem: itemActions.fetchItemRequested,
+  onUpdate: itemActions.updateRequested,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemUpdate);

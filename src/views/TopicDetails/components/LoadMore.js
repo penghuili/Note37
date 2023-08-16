@@ -14,7 +14,7 @@ function LoadMore({ topic, isLoadingItems, onFetchItems }) {
       label="Load more"
       size="xsmall"
       icon={<Refresh size="small" color="brand" />}
-      onClick={() => onFetchItems({ topicId: topic.sortKey, startKey: topic.startKey })}
+      onClick={() => onFetchItems({ id: topic.sortKey, startKey: topic.startKey })}
     />
   );
 }

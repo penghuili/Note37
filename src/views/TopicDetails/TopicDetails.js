@@ -16,6 +16,7 @@ import NoteItem from './components/NoteItem';
 function TopicDetails({
   topicId,
   topic,
+  items,
   isLoading,
   isLoadingItems,
   isDeletingItem,
@@ -27,7 +28,7 @@ function TopicDetails({
   const [deletingItemId, setDeletingItemId] = useState(null);
 
   useEffectOnce(() => {
-    onFetchItems({ topicId });
+    onFetchItems({ id: topicId });
   });
 
   return (
@@ -71,23 +72,23 @@ function TopicDetails({
             <Filters topicId={topicId} showLoadMore={false} />
             <Spacer />
 
-            {!isLoadingItems && !topic.items?.length && (
+            {!isLoadingItems && !items?.length && (
               <Box margin="1rem 0">
                 <Text>No items</Text>
               </Box>
             )}
-            {topic.items?.map(item => (
+            {items?.map(item => (
               <NoteItem
                 key={item.sortKey}
                 item={item}
                 topicId={topicId}
                 isDeleting={deletingItemId === item.sortKey && isDeletingItem}
                 onUpdate={content => {
-                  onUpdateItem({ topicId, itemId: item.sortKey, note: content, goBack: false });
+                  onUpdateItem({ id: topicId, itemId: item.sortKey, note: content, goBack: false });
                 }}
                 onDelete={() => {
                   setDeletingItemId(item.sortKey);
-                  onDeleteItem(topicId, item.sortKey);
+                  onDeleteItem({ id: topicId, itemId: item.sortKey });
                 }}
                 onNav={() => onNav(`/topics/${topicId}/items/${item.sortKey}/update`)}
               />

@@ -10,22 +10,19 @@ import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
 import TextEditor from '../../shared/react/TextEditor';
 
-function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onSetEditingItem, onUpdate }) {
+function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onUpdate }) {
   function handleAutoSave(newNote) {
     if (newNote === item?.note || !newNote || !newNote.trim()) {
       return;
     }
-    onUpdate({ topicId, itemId, note: newNote, goBack: false });
+    onUpdate({ id: topicId, itemId, note: newNote, goBack: false });
   }
 
   const [note, setNote] = useAutoSave(handleAutoSave, 2000);
   useListener(item?.note, value => setNote(value || ''));
 
   useEffectOnce(() => {
-    onFetchItem(topicId, itemId);
-    return () => {
-      onSetEditingItem(null);
-    };
+    onFetchItem({ id: topicId, itemId });
   });
 
   const date = item?.updatedAt || item?.createdAt;
@@ -40,7 +37,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onSetEditin
         <Button
           label="Update item"
           onClick={() => {
-            onUpdate({ topicId, itemId, note, goBack: true });
+            onUpdate({ id: topicId, itemId, note, goBack: true });
           }}
           disabled={isLoading}
         />

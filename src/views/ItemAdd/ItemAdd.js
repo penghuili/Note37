@@ -7,7 +7,7 @@ import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import TextEditor from '../../shared/react/TextEditor';
 
-function ItemAdd({ topicId, isLoading, onCreate }) {
+function ItemAdd({ topicId, isCreating, onCreate }) {
   const [note, setNote] = useState('');
   const [date, setDate] = useState(new Date());
 
@@ -23,9 +23,9 @@ function ItemAdd({ topicId, isLoading, onCreate }) {
         <Button
           label="Create item"
           onClick={() => {
-            onCreate(topicId, note, new Date(date).getTime());
+            onCreate({ id: topicId, note, date: new Date(date).getTime(), goBack: true });
           }}
-          disabled={!date || isLoading}
+          disabled={!date || isCreating}
         />
       </ContentWrapper>
     </>

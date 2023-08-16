@@ -65,9 +65,9 @@ function getChartOptions({
   };
 }
 
-function TopicDetails({ topicId, topic, isLoading, isLoadingItems, onFetchItems }) {
+function TopicDetails({ topicId, topic, chartData, isLoading, isLoadingItems, onFetchItems }) {
   useEffectOnce(() => {
-    onFetchItems({ topicId });
+    onFetchItems({ id: topicId });
   });
 
   return (
@@ -82,12 +82,12 @@ function TopicDetails({ topicId, topic, isLoading, isLoadingItems, onFetchItems 
             <Filters topicId={topicId} />
             <Spacer />
 
-            {topic.chartData?.length > 1 ? (
+            {chartData?.length > 1 ? (
               <Box width="100%">
                 <ApexCharts
                   type="line"
                   height={350}
-                  series={[{ name: 'After', data: topic.chartData }]}
+                  series={[{ name: 'After', data: chartData }]}
                   options={getChartOptions({
                     xaxisType: 'category',
                     xaxisRotate: 0,
