@@ -10,6 +10,7 @@ const mapStateToProps = (state, { params: { topicId, itemId } }) => ({
     itemSelectors.data.getStandaloneItem(state, topicId) ||
     itemSelectors.data.getItem(state, topicId, itemId),
   isLoading: itemSelectors.fetchItem.isPending(state, topicId),
+  isUpdating: itemSelectors.updateItem.isPending(state, topicId),
 });
 
 const mapDispatchToProps = {

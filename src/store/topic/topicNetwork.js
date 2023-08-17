@@ -20,7 +20,7 @@ export async function fetchTopics() {
       decryptedTopics.push(decrypted);
     });
 
-    return { data: decryptedTopics, error: null };
+    return { data: { items: decryptedTopics }, error: null };
   } catch (error) {
     return { data: null, error };
   }
@@ -64,7 +64,7 @@ export async function createTopic({ title, note }) {
   }
 }
 
-export async function updateTopic(topicId, decryptedPassword, { title, note, position }) {
+export async function updateTopic(topicId, { title, note, position }, decryptedPassword) {
   try {
     const { title: encryptedTitle, note: encryptedNote } = await encryptTopicContent(
       { title, note },

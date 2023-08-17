@@ -19,7 +19,7 @@ function TopicsReorder({ isLoading, topics, onFetch, onUpdate }) {
           items={topics}
           onDragEnd={(sourceId, targetId) => {
             const newPosition = calculateItemPosition(topics, sourceId, targetId);
-            onUpdate(sourceId, { position: newPosition, stayOnPage: true });
+            onUpdate({ itemId: sourceId, position: newPosition, goBack: false, reorder: true });
           }}
         />
       </ContentWrapper>

@@ -17,7 +17,6 @@ function TopicDetails({
   topicId,
   topic,
   items,
-  isLoading,
   isLoadingItems,
   isDeletingItem,
   onFetchItems,
@@ -33,7 +32,7 @@ function TopicDetails({
 
   return (
     <>
-      <AppBar title="Topic details" isLoading={isLoading || isLoadingItems} hasBack />
+      <AppBar title="Topic details" isLoading={isLoadingItems} hasBack />
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink

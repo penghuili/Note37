@@ -10,11 +10,13 @@ import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
 import TextEditor from '../../shared/react/TextEditor';
 
-function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onUpdate }) {
+function ItemUpdate({ topicId, itemId, item, isLoading, isUpdating, onFetchItem, onUpdate }) {
   function handleAutoSave(newNote) {
+    console.log('handleAutoSavesfs', newNote);
     if (newNote === item?.note || !newNote || !newNote.trim()) {
       return;
     }
+    console.log('handleAutoSave', newNote);
     onUpdate({ id: topicId, itemId, note: newNote, goBack: false });
   }
 
@@ -28,7 +30,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onUpdate })
   const date = item?.updatedAt || item?.createdAt;
   return (
     <>
-      <AppBar title="Update item" hasBack isLoading={isLoading} />
+      <AppBar title="Update item" hasBack isLoading={isLoading || isUpdating} />
       <ContentWrapper>
         <Text>{!!date && formatDateTime(new Date(date))}</Text>
         <Spacer />
@@ -39,7 +41,7 @@ function ItemUpdate({ topicId, itemId, item, isLoading, onFetchItem, onUpdate })
           onClick={() => {
             onUpdate({ id: topicId, itemId, note, goBack: true });
           }}
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
         />
       </ContentWrapper>
     </>

@@ -24,7 +24,7 @@ function TopicAdd({ isLoading, onCreate }) {
         <Button
           label="Create topic"
           onClick={() => {
-            onCreate(title, note);
+            onCreate({ title, note });
           }}
           disabled={!title || isLoading}
         />

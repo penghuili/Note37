@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
 
 import { itemActions, itemSelectors } from '../../store/item/itemStore';
-import { topicSelectors } from '../../store/topics/topicSelectors';
 import TopicChart from './TopicChart';
+import { topicSelectors } from '../../store/topic/topicStore';
 
 const mapStateToProps = (state, { params: { topicId } }) => ({
   topicId,
-  topic: topicSelectors.getTopic(state, topicId),
+  topic: topicSelectors.data.getItem(state, undefined, topicId),
   chartData: itemSelectors.data.getChartData(state, topicId),
-  isLoading: topicSelectors.isLoading(state),
   isLoadingItems: itemSelectors.fetchItems.isPending(state, topicId),
 });
 

@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
 
-import { topicActionCreators } from '../../store/topics/topicActions';
-import { topicSelectors } from '../../store/topics/topicSelectors';
+import { topicActions, topicSelectors } from '../../store/topic/topicStore';
 import Topics from './Topics';
 
 const mapStateToProps = state => ({
-  topics: topicSelectors.getTopics(state),
-  isLoading: topicSelectors.isLoading(state),
+  topics: topicSelectors.data.getItems(state),
+  isLoading: topicSelectors.fetchItems.isPending(state),
 });
 
 const mapDispatchToProps = {
-  onFetch: topicActionCreators.fetchTopicsRequested,
+  onFetch: topicActions.fetchItemsRequested,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topics);

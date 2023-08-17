@@ -9,18 +9,14 @@ import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
 import TextEditor from '../../shared/react/TextEditor';
 
-function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopic, onUpdate }) {
+function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onUpdate }) {
   const [title, setTitle] = useState('');
   useListener(topic?.title, value => setTitle(value || ''));
   const [note, setNote] = useState('');
   useListener(topic?.note, value => setNote(value || ''));
 
   useEffectOnce(() => {
-    onFetchTopic(topicId);
-
-    return () => {
-      onSetEditingTopic(null);
-    };
+    onFetchTopic({ itemId: topicId });
   });
 
   return (
@@ -36,7 +32,7 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onSetEditingTopi
         <Button
           label="Update topic"
           onClick={() => {
-            onUpdate(topicId, { title, note });
+            onUpdate({ itemId: topicId, title, note });
           }}
           disabled={!title || isLoading}
         />

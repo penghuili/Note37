@@ -65,14 +65,14 @@ function getChartOptions({
   };
 }
 
-function TopicDetails({ topicId, topic, chartData, isLoading, isLoadingItems, onFetchItems }) {
+function TopicDetails({ topicId, topic, chartData, isLoadingItems, onFetchItems }) {
   useEffectOnce(() => {
     onFetchItems({ id: topicId });
   });
 
   return (
     <>
-      <AppBar title="Topic frequency chart" isLoading={isLoading || isLoadingItems} hasBack />
+      <AppBar title="Topic frequency chart" isLoading={isLoadingItems} hasBack />
       <ContentWrapper>
         {!!topic && (
           <>

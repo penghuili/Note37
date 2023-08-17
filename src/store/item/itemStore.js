@@ -1,9 +1,15 @@
-import { call, select } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 
+import { ALL } from '../../components/MonthPicker';
 import { formatDate } from '../../shared/js/date';
 import { safeGet, safeSet } from '../../shared/js/object';
-import { createDataSelectors, createGeneralStore } from '../../shared/react/store/storeHelpers';
-import { makeSureTopicIsFetched } from '../topics/topicSagas';
+import {
+  createDataSelectors,
+  createGeneralStore,
+  mergeReducers,
+  mergeSagas,
+} from '../../shared/react/store/storeHelpers';
+import { makeSureTopicIsFetched } from '../topic/topicStore';
 import { createItem, deleteItem, fetchItem, fetchItems, updateItem } from './itemNetwork';
 
 export const itemDomain = 'item';
@@ -70,8 +76,8 @@ const { actions, selectors, reducer, saga } = createGeneralStore(itemDomain, {
 
     return { continueCall: true, result: topic };
   },
-  fetchItems: async ({ id, startKey, month }, friend) => {
-    return fetchItems(id, { startKey, month }, friend.decryptedPassword);
+  fetchItems: async ({ id, startKey, month }, topic) => {
+    return fetchItems(id, { startKey, month }, topic.decryptedPassword);
   },
   onFetchItemsSucceeded: (state, { payload: { id } }) => {
     return processItems(state, id);
@@ -84,8 +90,8 @@ const { actions, selectors, reducer, saga } = createGeneralStore(itemDomain, {
 
     return { continueCall: true, result: topic };
   },
-  fetchItem: async ({ id, itemId }, friend) => {
-    return fetchItem(id, itemId, friend.decryptedPassword);
+  fetchItem: async ({ id, itemId }, topic) => {
+    return fetchItem(id, itemId, topic.decryptedPassword);
   },
   preCreateItem: function* ({ id }) {
     const topic = yield call(makeSureTopicIsFetched, id);
@@ -95,8 +101,8 @@ const { actions, selectors, reducer, saga } = createGeneralStore(itemDomain, {
 
     return { continueCall: true, result: topic };
   },
-  createItem: async ({ id, note, date }, friend) => {
-    return createItem(id, { note, date }, friend.decryptedPassword);
+  createItem: async ({ id, note, date }, topic) => {
+    return createItem(id, { note, date }, topic.decryptedPassword);
   },
   onCreateItemSucceeded: (state, { payload: { id } }) => {
     return processItems(state, id);
@@ -109,8 +115,8 @@ const { actions, selectors, reducer, saga } = createGeneralStore(itemDomain, {
 
     return { continueCall: true, result: topic };
   },
-  updateItem: async ({ id, itemId, note }, friend) => {
-    return updateItem(id, itemId, { note }, friend.decryptedPassword);
+  updateItem: async ({ id, itemId, note }, topic) => {
+    return updateItem(id, itemId, { note }, topic.decryptedPassword);
   },
   onUpdateItemSucceeded: (state, { payload: { id } }) => {
     return processItems(state, id);
@@ -123,12 +129,37 @@ const { actions, selectors, reducer, saga } = createGeneralStore(itemDomain, {
   },
 });
 
+const MONTH_CHANGED = `${itemDomain}/MONTH_CHANGED`;
+const customReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MONTH_CHANGED:
+      return safeSet(state, ['data', action.payload.id], {
+        items: [],
+        month: action.payload.month,
+      });
+    default:
+      return state;
+  }
+};
+
+function* customSaga() {
+  yield takeLatest(MONTH_CHANGED, function* ({ payload: { id, month } }) {
+    if (month === ALL) {
+      yield put(actions.fetchItems.requested({ id }));
+      return;
+    }
+
+    yield put(actions.fetchItems.requested({ id, month }));
+  });
+}
+
 export const itemActions = {
   fetchItemsRequested: actions.fetchItems.requested.action,
   fetchItemRequested: actions.fetchItem.requested.action,
   createRequested: actions.createItem.requested.action,
   updateRequested: actions.updateItem.requested.action,
   deleteRequested: actions.deleteItem.requested.action,
+  monthChanged: ({ id, month }) => ({ type: MONTH_CHANGED, payload: { id, month } }),
 };
 
 export const itemSelectors = {
@@ -136,9 +167,10 @@ export const itemSelectors = {
   data: {
     ...dataSelectors,
     getChartData: (state, id) => safeGet(state, [itemDomain, 'data', id, 'chartData']),
+    getMonth: (state, id) => safeGet(state, [itemDomain, 'data', id, 'month'], ALL),
   },
 };
 
-export const itemReducer = reducer;
+export const itemReducer = mergeReducers([reducer, customReducer]);
 
-export const itemSagas = saga;
+export const itemSagas = mergeSagas([saga, customSaga]);

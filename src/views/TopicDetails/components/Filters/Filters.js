@@ -24,7 +24,7 @@ function Filters({
         startDate={new Date(topic.createdAt)}
         endDate={new Date()}
         value={month}
-        onChange={value => onMonthChange(topicId, value)}
+        onChange={value => onMonthChange({ id: topicId, month: value })}
       />
       {showLoadMore && (
         <>
