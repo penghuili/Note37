@@ -15,7 +15,7 @@ function ItemAdd({ topicId, isCreating, onCreate }) {
 
   return (
     <>
-      <AppBar title="Add item" hasBack />
+      <AppBar title="Add item" hasBack isLoading={isCreating} />
       <ContentWrapper>
         <DatePicker label="Date" showTime value={date} onChange={setDate} />
         <Spacer />
