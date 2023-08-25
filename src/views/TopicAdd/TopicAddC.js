@@ -4,7 +4,7 @@ import TopicAdd from './TopicAdd';
 import { topicActions, topicSelectors } from '../../store/topic/topicStore';
 
 const mapStateToProps = state => ({
-  isLoading: topicSelectors.fetchItems.isPending(state),
+  isCreating: topicSelectors.createItem.isPending(state),
 });
 
 const mapDispatchToProps = {

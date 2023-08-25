@@ -1,7 +1,6 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { ALL } from '../../components/MonthPicker';
-import { formatDate } from '../../shared/js/date';
 import { safeGet, safeSet } from '../../shared/js/object';
 import {
   createDataSelectors,
@@ -47,7 +46,7 @@ function getChartData(items) {
     .filter(item => !!item.gap)
     .map(item => ({
       y: +(item.gap.totalSeconds / 60 / 60 / 24).toFixed(2),
-      x: formatDate(new Date(item.createdAt)),
+      x: new Date(item.createdAt),
     }))
     .reverse();
 }

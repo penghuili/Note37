@@ -17,6 +17,8 @@ function TopicDetails({
   topicId,
   topic,
   items,
+  hasMore,
+  startKey,
   isLoadingItems,
   isDeletingItem,
   onFetchItems,
@@ -68,7 +70,7 @@ function TopicDetails({
             </HorizontalCenter>
 
             <Spacer />
-            <Filters topicId={topicId} showLoadMore={false} />
+            <Filters topicId={topicId} showLoadMore={false} hasMore={hasMore} startKey={startKey} />
             <Spacer />
 
             {!isLoadingItems && !items?.length && (
@@ -92,7 +94,13 @@ function TopicDetails({
                 onNav={() => onNav(`/topics/${topicId}/items/${item.sortKey}/update`)}
               />
             ))}
-            <LoadMore topic={topic} isLoadingItems={isLoadingItems} onFetchItems={onFetchItems} />
+            <LoadMore
+              topicId={topicId}
+              hasMore={hasMore}
+              startKey={startKey}
+              isLoadingItems={isLoadingItems}
+              onFetchItems={onFetchItems}
+            />
           </>
         )}
       </ContentWrapper>

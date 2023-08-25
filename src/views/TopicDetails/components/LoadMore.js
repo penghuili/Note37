@@ -2,8 +2,8 @@ import { Button, Spinner } from 'grommet';
 import { Refresh } from 'grommet-icons';
 import React from 'react';
 
-function LoadMore({ topic, isLoadingItems, onFetchItems }) {
-  if (!topic?.hasMore) {
+function LoadMore({ topicId, hasMore, startKey, isLoadingItems, onFetchItems }) {
+  if (!hasMore) {
     return null;
   }
 
@@ -14,7 +14,7 @@ function LoadMore({ topic, isLoadingItems, onFetchItems }) {
       label="Load more"
       size="xsmall"
       icon={<Refresh size="small" color="brand" />}
-      onClick={() => onFetchItems({ id: topic.sortKey, startKey: topic.startKey })}
+      onClick={() => onFetchItems({ id: topicId, startKey })}
     />
   );
 }

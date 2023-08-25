@@ -7,13 +7,13 @@ import Spacer from '../../shared/react-pure/Spacer';
 import AppBar from '../../shared/react/AppBar';
 import TextEditor from '../../shared/react/TextEditor';
 
-function TopicAdd({ isLoading, onCreate }) {
+function TopicAdd({ isCreating, onCreate }) {
   const [title, setTitle] = useState('');
   const [note, setNote] = useState('');
 
   return (
     <>
-      <AppBar title="Add topic" hasBack />
+      <AppBar title="Add topic" hasBack isLoading={isCreating} />
       <ContentWrapper>
         <InputField label="Title" placeholder="Title" value={title} onChange={setTitle} />
 
@@ -24,9 +24,9 @@ function TopicAdd({ isLoading, onCreate }) {
         <Button
           label="Create topic"
           onClick={() => {
-            onCreate({ title, note });
+            onCreate({ title, note, goBack: true });
           }}
-          disabled={!title || isLoading}
+          disabled={!title || isCreating}
         />
       </ContentWrapper>
     </>

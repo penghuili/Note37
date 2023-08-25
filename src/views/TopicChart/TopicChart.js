@@ -65,10 +65,20 @@ function getChartOptions({
   };
 }
 
-function TopicDetails({ topicId, topic, chartData, isLoadingItems, onFetchItems }) {
+function TopicDetails({
+  topicId,
+  topic,
+  chartData,
+  hasMore,
+  startKey,
+  isLoadingItems,
+  onFetchItems,
+}) {
   useEffectOnce(() => {
     onFetchItems({ id: topicId });
   });
+
+  console.log('chartData', chartData)
 
   return (
     <>
@@ -79,7 +89,7 @@ function TopicDetails({ topicId, topic, chartData, isLoadingItems, onFetchItems 
             <Heading margin="0">{topic.title}</Heading>
 
             <Spacer />
-            <Filters topicId={topicId} />
+            <Filters topicId={topicId} hasMore={hasMore} startKey={startKey} />
             <Spacer />
 
             {chartData?.length > 1 ? (
@@ -89,7 +99,6 @@ function TopicDetails({ topicId, topic, chartData, isLoadingItems, onFetchItems 
                   height={350}
                   series={[{ name: 'After', data: chartData }]}
                   options={getChartOptions({
-                    xaxisType: 'category',
                     xaxisRotate: 0,
                     colors: [apps.note37.color],
                     tickAmount: 1,

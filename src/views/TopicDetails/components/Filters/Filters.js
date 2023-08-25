@@ -10,6 +10,8 @@ function Filters({
   topic,
   month,
   showLoadMore = true,
+  hasMore,
+  startKey,
   isLoadingItems,
   onFetchItems,
   onMonthChange,
@@ -29,7 +31,13 @@ function Filters({
       {showLoadMore && (
         <>
           <Box width="1rem" />
-          <LoadMore topic={topic} isLoadingItems={isLoadingItems} onFetchItems={onFetchItems} />
+          <LoadMore
+            topicId={topicId}
+            hasMore={hasMore}
+            startKey={startKey}
+            isLoadingItems={isLoadingItems}
+            onFetchItems={onFetchItems}
+          />
         </>
       )}
     </HorizontalCenter>

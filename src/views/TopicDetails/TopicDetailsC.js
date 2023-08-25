@@ -11,6 +11,8 @@ const mapStateToProps = (state, { params: { topicId } }) => ({
   items: itemSelectors.data.getItems(state, topicId),
   isLoadingItems: itemSelectors.fetchItems.isPending(state, topicId),
   isDeletingItem: itemSelectors.deleteItem.isPending(state, topicId),
+  hasMore: itemSelectors.data.hasMore(state, topicId),
+  startKey: itemSelectors.data.getStartKey(state, topicId),
 });
 
 const mapDispatchToProps = {
