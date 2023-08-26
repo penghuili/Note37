@@ -5,7 +5,7 @@ import {
   createGeneralStore,
   defaultId,
 } from '../../shared/react/store/storeHelpers';
-import { createTopic, fetchTopic, fetchTopics, updateTopic } from './topicNetwork';
+import { createTopic, deleteTopic, fetchTopic, fetchTopics, updateTopic } from './topicNetwork';
 
 export const topicDomain = 'topic';
 
@@ -46,6 +46,9 @@ const { actions, selectors, reducer, saga } = createGeneralStore(topicDomain, {
   },
   updateItem: async ({ itemId, title, note, position }, topic) => {
     return updateTopic(itemId, { title, note, position }, topic.decryptedPassword);
+  },
+  deleteItem: async ({ itemId }) => {
+    return deleteTopic(itemId);
   },
 });
 

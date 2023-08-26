@@ -86,6 +86,16 @@ export async function updateTopic(topicId, { title, note, position }, decryptedP
   }
 }
 
+export async function deleteTopic(topicId) {
+  try {
+    const data = await HTTP.delete(apps.note37.name, `/v1/topics/${topicId}`);
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
 async function encryptTopicContent(data, decryptedPassword) {
   const { title, note } = data;
 

@@ -21,9 +21,11 @@ function TopicDetails({
   startKey,
   isLoadingItems,
   isDeletingItem,
+  isDeletingTopic,
   onFetchItems,
   onUpdateItem,
   onDeleteItem,
+  onDeleteTopic,
   onNav,
 }) {
   const [deletingItemId, setDeletingItemId] = useState(null);
@@ -34,7 +36,11 @@ function TopicDetails({
 
   return (
     <>
-      <AppBar title="Topic details" isLoading={isLoadingItems} hasBack />
+      <AppBar
+        title="Topic details"
+        isLoading={isLoadingItems || isDeletingTopic || isDeletingItem}
+        hasBack
+      />
       <ContentWrapper>
         <HorizontalCenter margin="0 0 1rem">
           <RouteLink
@@ -64,6 +70,12 @@ function TopicDetails({
                     label: 'Frequency chart',
                     onClick: () => onNav(`/topics/${topicId}/chart`),
                     margin: '0.25rem 0',
+                  },
+                  {
+                    label: 'Delete',
+                    onClick: () => onDeleteTopic({ itemId: topicId, goBack: true }),
+                    margin: '0.25rem 0',
+                    color: 'status-critical',
                   },
                 ]}
               />
