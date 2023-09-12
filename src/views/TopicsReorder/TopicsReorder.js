@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { calculateItemPosition } from '../../shared/js/position';
 import ContentWrapper from '../../shared/react-pure/ContentWrapper';
-import DragDrop from '../../shared/react-pure/DragDrop';
+import Reorder from '../../shared/react-pure/Reorder';
 import AppBar from '../../shared/react/AppBar';
 import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 
@@ -15,11 +14,16 @@ function TopicsReorder({ isLoading, topics, onFetch, onUpdate }) {
     <>
       <AppBar title="Reorder topics" isLoading={isLoading} hasBack />
       <ContentWrapper>
-        <DragDrop
+        <Reorder
           items={topics}
-          onDragEnd={(sourceId, targetId) => {
-            const newPosition = calculateItemPosition(topics, sourceId, targetId);
-            onUpdate({ itemId: sourceId, position: newPosition, goBack: false, reorder: true });
+          onReorder={({ itemId, newPosition, onSucceeded }) => {
+            onUpdate({
+              itemId,
+              position: newPosition,
+              goBack: false,
+              reorder: true,
+              onSucceeded,
+            });
           }}
         />
       </ContentWrapper>

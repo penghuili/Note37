@@ -44,8 +44,13 @@ const { actions, selectors, reducer, saga } = createGeneralStore(topicDomain, {
 
     return { continueCall: true, result: topic };
   },
-  updateItem: async ({ itemId, title, note, position }, topic) => {
-    return updateTopic(itemId, { title, note, position }, topic.decryptedPassword);
+  updateItem: async ({ itemId, title, note, position, onSucceeded }, topic) => {
+    const result = await updateTopic(itemId, { title, note, position }, topic.decryptedPassword);
+    if (onSucceeded && result.data) {
+      onSucceeded(result.data);
+    }
+
+    return result;
   },
   deleteItem: async ({ itemId }) => {
     return deleteTopic(itemId);
