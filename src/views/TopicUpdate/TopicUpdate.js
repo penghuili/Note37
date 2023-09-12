@@ -9,7 +9,7 @@ import { useEffectOnce } from '../../shared/react/hooks/useEffectOnce';
 import { useListener } from '../../shared/react/hooks/useListener';
 import TextEditor from '../../shared/react/TextEditor';
 
-function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onUpdate }) {
+function TopicUpdate({ topicId, topic, isLoading, isUpdating, onFetchTopic, onUpdate }) {
   const [title, setTitle] = useState('');
   useListener(topic?.title, value => setTitle(value || ''));
   const [note, setNote] = useState('');
@@ -21,7 +21,7 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onUpdate }) {
 
   return (
     <>
-      <AppBar title="Update topic" hasBack isLoading={isLoading} />
+      <AppBar title="Update topic" hasBack isLoading={isLoading || isUpdating} />
       <ContentWrapper>
         <InputField label="Title" placeholder="Title" value={title} onChange={setTitle} />
 
@@ -32,9 +32,9 @@ function TopicUpdate({ isLoading, topicId, topic, onFetchTopic, onUpdate }) {
         <Button
           label="Update topic"
           onClick={() => {
-            onUpdate({ itemId: topicId, title, note });
+            onUpdate({ itemId: topicId, title, note, goBack: true });
           }}
-          disabled={!title || isLoading}
+          disabled={!title || isLoading || isUpdating}
         />
       </ContentWrapper>
     </>

@@ -12,7 +12,7 @@ import TextEditor from '../../shared/react/TextEditor';
 
 function ItemUpdate({ topicId, itemId, item, isLoading, isUpdating, onFetchItem, onUpdate }) {
   function handleAutoSave(newNote) {
-    if (newNote === item?.note || !newNote || !newNote.trim()) {
+    if (isUpdating || newNote === item?.note || !newNote || !newNote.trim()) {
       return;
     }
     onUpdate({ id: topicId, itemId, note: newNote, goBack: false });
