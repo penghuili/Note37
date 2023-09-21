@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider as StoreProvider, useDispatch } from 'react-redux';
 import { useLocation } from 'wouter';
 
-import logo from './assets/logo.png';
 import Pitch from './components/Pitch';
 import Router from './router';
 import apps from './shared/js/apps';
@@ -17,8 +16,7 @@ import initShared from './shared/react/initShared';
 import Toast from './shared/react/Toast';
 import store from './store';
 
-
-initShared({ logo, app: apps.note37.name });
+initShared({ logo: `${process.env.REACT_APP_ASSETS_FOR_CODE}/logo.png`, app: apps.note37.name });
 const theme = createTheme('#DB4437');
 
 setHook('location', useLocation);

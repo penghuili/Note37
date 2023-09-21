@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import { sharedReducer } from '../shared/react/store/sharedReducer';
-import { itemDomain, itemReducer } from './item/itemStore';
-import { topicDomain, topicReducer } from './topic/topicStore';
+import { groupDomain, groupReducer } from './group/groupStore';
+import { noteDomain, noteReducer } from './note/noteStore';
 
 export const reducers = combineReducers({
   shared: sharedReducer,
-  [topicDomain]: topicReducer,
-  [itemDomain]: itemReducer,
+  [noteDomain]: noteReducer,
+  [groupDomain]: groupReducer,
 });

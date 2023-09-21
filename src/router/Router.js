@@ -11,15 +11,13 @@ import SignUp from '../shared/react/SignUp';
 import Verify2FA from '../shared/react/Verify2FA';
 import Account from '../views/Account';
 import Encryption from '../views/Encryption';
-import ItemAdd from '../views/ItemAdd';
-import ItemUpdate from '../views/ItemUpdate';
+import Groups from '../views/Groups';
+import GroupsReorder from '../views/GroupsReorder';
+import GroupUpdate from '../views/GroupUpdate';
+import NoteAdd from '../views/NoteAdd';
+import Notes from '../views/Notes';
+import NoteUpdate from '../views/NoteUpdate';
 import Privacy from '../views/Privacy';
-import TopicAdd from '../views/TopicAdd';
-import TopicChart from '../views/TopicChart';
-import TopicDetails from '../views/TopicDetails';
-import Topics from '../views/Topics';
-import TopicsReorder from '../views/TopicsReorder';
-import TopicUpdate from '../views/TopicUpdate';
 import Welcome from '../views/Welcome';
 
 function Router({ isCheckingRefreshToken, isLoggedIn }) {
@@ -34,13 +32,13 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
   if (isLoggedIn) {
     return (
       <Switch>
-        <Route path="/topics/add" component={TopicAdd} />
-        <Route path="/topics/reorder" component={TopicsReorder} />
-        <Route path="/topics/:topicId" component={TopicDetails} />
-        <Route path="/topics/:topicId/update" component={TopicUpdate} />
-        <Route path="/topics/:topicId/chart" component={TopicChart} />
-        <Route path="/topics/:topicId/items/add" component={ItemAdd} />
-        <Route path="/topics/:topicId/items/:itemId/update" component={ItemUpdate} />
+        <Route path="/groups" component={Groups} />
+        <Route path="/groups/reorder" component={GroupsReorder} />
+        <Route path="/groups/:groupId/update" component={GroupUpdate} />
+
+        <Route path="/notes" component={Notes} />
+        <Route path="/notes/add" component={NoteAdd} />
+        <Route path="/notes/:noteId/update" component={NoteUpdate} />
 
         <Route path="/account" component={Account} />
         <Route path="/security" component={Security} />
@@ -49,7 +47,7 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
         <Route path="/encryption" component={Encryption} />
         <Route path="/privacy" component={Privacy} />
 
-        <Route path="/" component={Topics} />
+        <Route path="/" component={Notes} />
         <Route>{() => <Redirect to="/" />}</Route>
       </Switch>
     );
