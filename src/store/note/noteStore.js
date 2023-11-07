@@ -1,5 +1,4 @@
 import { select } from 'redux-saga/effects';
-
 import { safeGet, safeSet } from '../../shared/js/object';
 import { uniqBy } from '../../shared/js/uniq';
 import {
@@ -43,10 +42,10 @@ function processDateForItems(items) {
 }
 
 function processItems(state) {
-  const items = safeGet(state, ['data', defaultId, 'items'], []);
+  const items = safeGet(state, [defaultId, 'data', 'items'], []);
   const updatedItems = processDateForItems(items);
 
-  return safeSet(state, ['data', defaultId], {
+  return safeSet(state, [defaultId, 'data'], {
     items: updatedItems,
   });
 }
@@ -76,8 +75,9 @@ const { actions, selectors, reducer, saga } = createGeneralStore(noteDomain, {
     return processItems(state);
   },
   preUpdateItem: function* ({ itemId }) {
-    const item = yield select(dataSelectors.getStandaloneItem);
-    if (item?.sortKey !== itemId) {
+    const standaloneItem = yield select(dataSelectors.getStandaloneItem);
+    const item = yield select(dataSelectors.getItem, undefined, itemId);
+    if ((item || standaloneItem)?.sortKey !== itemId) {
       return { continueCall: false };
     }
 
@@ -102,7 +102,7 @@ const deleteGroupItemSucceededActionType = groupActions.deleteGroupItemSucceeded
 const customReducer = (state = {}, action) => {
   switch (action.type) {
     case createGroupItemSucceededActionType: {
-      const note = safeGet(state, ['data', defaultId, 'item']);
+      const note = safeGet(state, [defaultId, 'data', 'item']);
       if (!note) {
         return state;
       }
@@ -122,7 +122,7 @@ const customReducer = (state = {}, action) => {
     }
 
     case deleteGroupItemSucceededActionType: {
-      const note = safeGet(state, ['data', defaultId, 'item']);
+      const note = safeGet(state, [defaultId, 'data', 'item']);
       if (!note) {
         return state;
       }

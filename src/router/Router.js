@@ -1,7 +1,6 @@
 import { Spinner } from 'grommet';
 import React from 'react';
 import { Redirect, Route, Switch } from 'wouter';
-
 import HorizontalCenter from '../shared/react-pure/HorizontalCenter';
 import ChangePassword from '../shared/react/ChangePassword';
 import Security from '../shared/react/Security';
@@ -11,16 +10,20 @@ import SignUp from '../shared/react/SignUp';
 import Verify2FA from '../shared/react/Verify2FA';
 import Account from '../views/Account';
 import Encryption from '../views/Encryption';
-import Groups from '../views/Groups';
-import GroupsReorder from '../views/GroupsReorder';
 import GroupUpdate from '../views/GroupUpdate';
+import Groups from '../views/Groups';
+import Maintenance from '../views/Maintenance';
 import NoteAdd from '../views/NoteAdd';
-import Notes from '../views/Notes';
 import NoteUpdate from '../views/NoteUpdate';
+import Notes from '../views/Notes';
 import Privacy from '../views/Privacy';
 import Welcome from '../views/Welcome';
 
 function Router({ isCheckingRefreshToken, isLoggedIn }) {
+  if (process.env.REACT_APP_MAINTENANCE === 'true') {
+    return <Maintenance />;
+  }
+
   if (isCheckingRefreshToken) {
     return (
       <HorizontalCenter justify="center" margin="3rem 0 0">
@@ -33,7 +36,6 @@ function Router({ isCheckingRefreshToken, isLoggedIn }) {
     return (
       <Switch>
         <Route path="/groups" component={Groups} />
-        <Route path="/groups/reorder" component={GroupsReorder} />
         <Route path="/groups/:groupId/update" component={GroupUpdate} />
 
         <Route path="/notes" component={Notes} />
